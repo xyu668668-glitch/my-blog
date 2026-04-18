@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的博客</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fafaf8;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-light: #666;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --border: #e5e5e5;
+      --tag-bg: #f0f0ee;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Header */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    nav { display: flex; gap: 28px; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active { color: var(--text); }
+
+    /* Main */
+    main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* Hero */
+    .hero {
+      margin-bottom: 56px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-light);
+      max-width: 600px;
+    }
+
+    /* Post Grid */
+    .posts-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+
+    .post-list { display: flex; flex-direction: column; gap: 0; }
+
+    .post-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+
+    .post-item:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .post-date {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .post-tag {
+      font-size: 12px;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 2px 10px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    .post-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      line-height: 1.4;
+    }
+
+    .post-excerpt {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* Post Detail */
+    .post-detail { display: none; }
+    .post-detail.active { display: block; }
+    .post-detail .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--text-light);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .post-detail .back-link:hover { color: var(--accent); }
+    .post-detail h1 { font-size: 34px; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.3; }
+    .post-detail .post-header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .post-detail .post-content { font-size: 17px; line-height: 1.9; }
+    .post-detail .post-content p { margin-bottom: 20px; }
+    .post-detail .post-content h2 { font-size: 22px; margin: 40px 0 16px; letter-spacing: -0.3px; }
+    .post-detail .post-content ul, .post-detail .post-content ol { margin: 16px 0 20px 24px; }
+    .post-detail .post-content li { margin-bottom: 8px; }
+    .post-detail .post-content blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 12px 20px;
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+      color: var(--text-light);
+    }
+
+    /* About */
+    .about-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin-top: 48px;
+    }
+
+    .about-section h2 { font-size: 20px; margin-bottom: 16px; letter-spacing: -0.3px; }
+    .about-section p { font-size: 15px; color: var(--text-light); line-height: 1.8; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-light);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      header { padding: 0 20px; }
+      .header-inner { height: 56px; }
+      nav { gap: 16px; }
+      main { padding: 32px 16px 60px; }
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 16px; }
+      .post-item { padding: 20px; }
+      .post-title { font-size: 17px; }
+      .post-detail h1 { font-size: 26px; }
+    }
+
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="showHome(); return false;">我的博客</a>
+    <nav>
+      <a href="#" class="active" onclick="showHome(); return false;">文章</a>
+      <a href="#" onclick="showAbout(); return false;">关于</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Home View -->
+  <div id="home-view">
+    <div class="hero">
+      <h1>记录思考，沉淀成长</h1>
+      <p>在这里分享工作心得、技术探索与生活感悟。每篇文章都是一次认真的思考。</p>
+    </div>
+
+    <div class="posts-label">全部文章</div>
+    <div class="post-list" id="post-list"></div>
+
+    <div class="about-section" onclick="showAbout(); return false;" style="cursor:pointer;">
+      <h2>关于我</h2>
+      <p>一枚喜欢折腾效率工具的普通人。这个博客用来记录所学、沉淀思考。欢迎交流！</p>
+    </div>
+  </div>
+
+  <!-- About View -->
+  <div id="about-view" class="post-detail" style="display:none;">
+    <a href="#" class="back-link" onclick="showHome(); return false;">← 返回文章列表</a>
+    <div class="post-header">
+      <h1>关于</h1>
+      <div class="post-meta">
+        <span class="post-date">2026年4月</span>
+      </div>
+    </div>
+    <div class="post-content">
+      <p>你好，欢迎来到我的博客。</p>
+      <p>我是一个喜欢探索效率工具、折腾技术的人。工作之余喜欢写代码、做自动化，把重复的事情变得简单。</p>
+      <p>这个博客建于 2026 年，用 WorkBuddy + AI 生成，托管在 Vercel 上。</p>
+      <h2>联系方式</h2>
+      <p>如有交流想法，欢迎通过各种方式联系。</p>
+    </div>
+  </div>
+
+  <!-- Post Detail View -->
+  <div id="post-detail-view" class="post-detail" style="display:none;"></div>
+</main>
+
+<footer>
+  © 2026 我的博客 · 用 WorkBuddy + AI 构建
+</footer>
+
+<script>
+const posts = [
+  {
+    id: 1,
+    title: "用 AI 工具提升行政执法法制审核效率的实践",
+    date: "2026-04-15",
+    tag: "工作",
+    excerpt: "结合法律知识库与 AI 辅助审查工具，探索法制审核工作的数字化转型路径，从重复性工作中解放出来。",
+    content: `
+      <p>行政执法法制审核是基层法制工作的核心环节，涉及大量法律条文的检索、案例的比对以及文书格式的核对。传统方式效率低、易出错，AI 工具的引入可以显著改善这一状况。</p>
+      <h2>核心痛点</h2>
+      <ul>
+        <li>法条检索依赖人工翻查，耗时长</li>
+        <li>同类案件裁量标准不一致</li>
+        <li>文书格式不规范问题反复出现</li>
+      </ul>
+      <h2>AI 辅助方案</h2>
+      <p>通过建立结构化的法律知识库，配合 AI 问答接口，可以实现：法条的快速定位、裁量基准的智能提示、文书格式的自动检查。这套方案已在实际工作中验证，效果明显。</p>
+      <blockquote>工具只是手段，核心还是人。用好 AI 工具的关键在于，知道什么时候用它，什么时候不该用它。</blockquote>
+      <h2>下一步计划</h2>
+      <p>继续完善知识库内容，积累更多典型案例，形成可直接调用的执法参考模板。</p>
+    `
+  },
+  {
+    id: 2,
+    title: "从零搭建个人投资追踪系统：工具选型与实践",
+    date: "2026-04-08",
+    tag: "投资",
+    excerpt: "用 Python + Web 工具搭建个人投资组合追踪系统，自动化获取行情数据，告别手动记录。",
+    content: `
+      <p>投资是一件需要长期坚持的事，而数据的记录和追踪往往是最费时间的环节。我花了几天时间，用 AI 辅助搭建了一套自动化投资追踪系统，现在每天只需要打开网页就能看到所有持仓情况。</p>
+      <h2>工具选型</h2>
+      <p>核心数据源选择了 AkShare 和东方财富 API，行情数据免费且覆盖全面。前端用简单的 HTML + Chart.js 展示图表，后端用 Python 脚本定时更新数据。</p>
+      <h2>核心功能</h2>
+      <ul>
+        <li>持仓收益实时计算</li>
+        <li>250日均线偏离度可视化</li>
+        <li>RSI 超买超卖提示</li>
+        <li>每日红绿灯评分卡</li>
+      </ul>
+      <blockquote>投资系统是为自己服务的，不需要追求花哨，核心数据清晰直观就够了。</blockquote>
+      <h2>踩过的坑</h2>
+      <p>前复权数据计算均线时要格外注意，否则历史数据会失真。另外 API 有频率限制，定时任务间隔不要太短。</p>
+    `
+  },
+  {
+    id: 3,
+    title: "Mac mini + 极空间 NAS：我的个人数字中枢",
+    date: "2026-03-28",
+    tag: "效率",
+    excerpt: "Mac mini M4 作为主力工作机，极空间 NAS 负责存储与媒体管理，这套组合用了半年，聊聊真实感受。",
+    content: `
+      <p>去年入手了 Mac mini M4，配合极空间 NAS Z4，用了大半年，组合超出预期，记录一下真实使用感受。</p>
+      <h2>为什么选 Mac mini</h2>
+      <p>M4 芯片性能强，功耗低，Mac mini 体积小不占地方，性价比在 Mac 产品线里最高。8G 内存日常办公够用，有条件建议上 16G。</p>
+      <h2>极空间 NAS 的价值</h2>
+      <p>Radarr/Sonarr 自动追剧追电影，Jellyfin 做媒体中心，Jellyseerr 做请求管理。这套自动化媒体库体验比任何流媒体都爽。</p>
+      <h2>数据备份策略</h2>
+      <p>重要文件用 Mac 自带 Time Machine 备份到 NAS，另外用 rclone 定期同步到阿里云 OSS，冷备一份。重要工作文件三重保护。</p>
+      <blockquote>NAS 是那个"买了之后才发现早就需要"的东西。</blockquote>
+    `
+  },
+  {
+    id: 4,
+    title: "博客上线全流程：零基础也能做网站",
+    date: "2026-03-20",
+    tag: "技术",
+    excerpt: "注册 GitHub、安装 GitHub Desktop、推到远程仓库、Vercel 部署上线——完整流程记录，从零到上线只需要半天。",
+    content: `
+      <p>很多人觉得做网站是技术活，其实现在有了 AI 辅助，最难的那部分已经有人帮你做了。这篇文章记录了我从零开始建博客的完整流程。</p>
+      <h2>需要准备的东西</h2>
+      <ul>
+        <li>一个 GitHub 账号（免费）</li>
+        <li>GitHub Desktop（免费，图形界面）</li>
+        <li>一个 Vercel 账号（免费）</li>
+        <li>一个域名（可选，约50元/年）</li>
+      </ul>
+      <h2>核心步骤</h2>
+      <p>第一步用 AI 生成网站代码，第二步用 GitHub Desktop 推送到仓库，第三步 Vercel 读取 GitHub 仓库自动构建部署。全程不需要写代码，不需要敲命令行。</p>
+      <blockquote>不要等准备好了再开始，先跑通最小闭环，再迭代优化。</blockquote>
+      <h2>总费用</h2>
+      <p>如果用 Vercel 免费额度托管，网站本身不花钱。只需要一个域名（可选），50元/年。如果用腾讯云香港服务器，月均30元左右。</p>
+    `
+  }
+];
+
+function renderPostList() {
+  const container = document.getElementById('post-list');
+  container.innerHTML = posts.map(p => `
+    <a href="#" class="post-item" onclick="showPost(${p.id}); return false;">
+      <div class="post-meta">
+        <span class="post-date">${p.date}</span>
+        <span class="post-tag">${p.tag}</span>
+      </div>
+      <div class="post-title">${p.title}</div>
+      <div class="post-excerpt">${p.excerpt}</div>
+    </a>
+  `).join('');
+}
+
+function showHome() {
+  document.getElementById('home-view').style.display = '';
+  document.getElementById('about-view').style.display = 'none';
+  document.getElementById('post-detail-view').style.display = 'none';
+  document.getElementById('post-detail-view').classList.remove('active');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.querySelector('nav a:first-child').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showAbout() {
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('about-view').style.display = '';
+  document.getElementById('about-view').style.display = 'block';
+  document.getElementById('post-detail-view').style.display = 'none';
+  document.getElementById('post-detail-view').classList.remove('active');
+  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('nav a')[1].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showPost(id) {
+  const post = posts.find(p => p.id === id);
+  if (!post) return;
+  document.getElementById('post-detail-view').innerHTML = `
+    <a href="#" class="back-link" onclick="showHome(); return false;">← 返回文章列表</a>
+    <div class="post-header">
+      <h1>${post.title}</h1>
+      <div class="post-meta">
+        <span class="post-date">${post.date}</span>
+        <span class="post-tag">${post.tag}</span>
+      </div>
+    </div>
+    <div class="post-content">${post.content}</div>
+  `;
+  document.getElementById('home-view').style.display = 'none';
+  document.getElementById('about-view').style.display = 'none';
+  document.getElementById('post-detail-view').style.display = '';
+  document.getElementById('post-detail-view').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+renderPostList();
+</script>
+
+</body>
+</html>
