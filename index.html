@@ -3,218 +3,484 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的博客</title>
+  <title>Blog — 思考与记录</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #fafaf8;
+      --bg: #f7f5f0;
       --card: #ffffff;
-      --text: #1a1a1a;
-      --text-light: #666;
-      --accent: #2563eb;
-      --accent-light: #dbeafe;
-      --border: #e5e5e5;
-      --tag-bg: #f0f0ee;
+      --text: #1c1c1c;
+      --text-muted: #888;
+      --accent: #c07a4f;
+      --accent-light: #f3ebe3;
+      --border: #e8e4de;
+      --tag-bg: #f0ece4;
+      --tag-text: #8a6d5a;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
-    header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 0 40px;
+    .serif { font-family: 'Noto Serif SC', Georgia, serif; }
+
+    /* ── Navigation ── */
+    nav {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
+      background: rgba(247,245,240,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .header-inner {
-      max-width: 960px;
+    .nav-inner {
+      max-width: 1100px;
       margin: 0 auto;
+      padding: 0 40px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
     }
 
-    .logo {
-      font-size: 20px;
+    .nav-brand {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
       font-weight: 700;
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.5px;
     }
 
-    nav { display: flex; gap: 28px; }
+    .nav-links { display: flex; gap: 36px; align-items: center; }
 
-    nav a {
+    .nav-links a {
       text-decoration: none;
-      color: var(--text-light);
-      font-size: 14px;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
       transition: color 0.2s;
+      cursor: pointer;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* ── Layout ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 72px;
     }
 
-    nav a:hover, nav a.active { color: var(--text); }
-
-    /* Main */
-    main { max-width: 960px; margin: 0 auto; padding: 48px 24px 80px; }
-
-    /* Hero */
-    .hero {
-      margin-bottom: 56px;
-      padding-bottom: 48px;
-      border-bottom: 1px solid var(--border);
+    .hero-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
     }
 
     .hero h1 {
-      font-size: 38px;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-      line-height: 1.2;
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -1.5px;
+      max-width: 760px;
+      margin-bottom: 28px;
     }
 
-    .hero p {
-      font-size: 18px;
-      color: var(--text-light);
-      max-width: 600px;
+    .hero-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 540px;
+      line-height: 1.8;
     }
 
-    /* Post Grid */
-    .posts-label {
-      font-size: 12px;
-      font-weight: 600;
+    /* ── Section label ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 36px;
+    }
+
+    .section-title {
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-light);
-      margin-bottom: 24px;
+      letter-spacing: 2px;
+      color: var(--text-muted);
     }
 
+    .section-count {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Post list ── */
     .post-list { display: flex; flex-direction: column; gap: 0; }
 
-    .post-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 28px 32px;
-      margin-bottom: 16px;
+    .post-card {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      gap: 0 40px;
+      align-items: start;
+      padding: 36px 0;
+      border-bottom: 1px solid var(--border);
       text-decoration: none;
       color: inherit;
-      display: block;
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      transition: background 0.2s;
+      cursor: pointer;
     }
 
-    .post-item:hover {
-      border-color: var(--accent);
-      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
-      transform: translateY(-2px);
+    .post-card:hover .post-title { color: var(--accent); }
+
+    .post-date-block { padding-top: 4px; }
+
+    .post-day {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--border);
+      letter-spacing: -2px;
+      transition: color 0.3s;
+    }
+    .post-card:hover .post-day { color: var(--accent-light); }
+
+    .post-month-year {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
     }
 
-    .post-meta {
-      display: flex;
-      gap: 16px;
-      align-items: center;
+    .post-body {}
+
+    .post-tag {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--tag-text);
+      background: var(--tag-bg);
+      padding: 3px 10px;
+      border-radius: 2px;
       margin-bottom: 10px;
     }
 
-    .post-date {
-      font-size: 13px;
-      color: var(--text-light);
-    }
-
-    .post-tag {
-      font-size: 12px;
-      background: var(--accent-light);
-      color: var(--accent);
-      padding: 2px 10px;
-      border-radius: 100px;
-      font-weight: 500;
-    }
-
     .post-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 600;
       line-height: 1.4;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+      transition: color 0.25s;
     }
 
     .post-excerpt {
-      font-size: 15px;
-      color: var(--text-light);
-      line-height: 1.7;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 580px;
     }
 
-    /* Post Detail */
-    .post-detail { display: none; }
-    .post-detail.active { display: block; }
-    .post-detail .back-link {
+    .post-arrow {
+      font-size: 20px;
+      color: var(--border);
+      align-self: center;
+      transition: color 0.2s, transform 0.2s;
+      padding-left: 20px;
+    }
+    .post-card:hover .post-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* ── Divider ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 72px 0 48px;
+    }
+    .section-divider::before {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-divider span {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Feature post ── */
+    .feature-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 64px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+    }
+    .feature-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+
+    .feature-visual {
+      background: var(--accent-light);
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 40%, rgba(192,122,79,0.15) 0%, transparent 70%);
+    }
+
+    .feature-visual-text {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: rgba(192,122,79,0.18);
+      user-select: none;
+    }
+
+    .feature-body { padding: 48px 48px 48px 0; display: flex; flex-direction: column; justify-content: center; }
+
+    .feature-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+
+    .feature-excerpt {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .feature-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .feature-date { font-size: 12px; color: var(--text-muted); }
+
+    .feature-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .feature-cta::after { content: '→'; }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .about-aside {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px;
+    }
+
+    .aside-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .stat-list { display: flex; flex-direction: column; gap: 20px; }
+
+    .stat-item { display: flex; flex-direction: column; gap: 4px; }
+
+    .stat-value {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    .stat-label { font-size: 12px; color: var(--text-muted); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ── Post detail ── */
+    #post-detail { display: none; }
+    #post-detail.active { display: block; }
+
+    .back-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
-      color: var(--text-light);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
       text-decoration: none;
-      margin-bottom: 40px;
+      margin-bottom: 56px;
+      padding-top: 48px;
       transition: color 0.2s;
     }
-    .post-detail .back-link:hover { color: var(--accent); }
-    .post-detail h1 { font-size: 34px; letter-spacing: -1px; margin-bottom: 16px; line-height: 1.3; }
-    .post-detail .post-header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-    .post-detail .post-content { font-size: 17px; line-height: 1.9; }
-    .post-detail .post-content p { margin-bottom: 20px; }
-    .post-detail .post-content h2 { font-size: 22px; margin: 40px 0 16px; letter-spacing: -0.3px; }
-    .post-detail .post-content ul, .post-detail .post-content ol { margin: 16px 0 20px 24px; }
-    .post-detail .post-content li { margin-bottom: 8px; }
-    .post-detail .post-content blockquote {
-      border-left: 3px solid var(--accent);
-      padding: 12px 20px;
-      background: var(--accent-light);
-      border-radius: 0 8px 8px 0;
-      margin: 24px 0;
-      color: var(--text-light);
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .post-header { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+
+    .post-header .post-tag { margin-bottom: 20px; }
+
+    .post-header h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 20px;
     }
 
-    /* About */
-    .about-section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 36px 40px;
-      margin-top: 48px;
-    }
-
-    .about-section h2 { font-size: 20px; margin-bottom: 16px; letter-spacing: -0.3px; }
-    .about-section p { font-size: 15px; color: var(--text-light); line-height: 1.8; }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--text-light);
+    .post-header .post-meta {
       font-size: 13px;
-      border-top: 1px solid var(--border);
-      margin-top: 40px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 16px;
     }
 
-    /* Responsive */
-    @media (max-width: 640px) {
-      header { padding: 0 20px; }
-      .header-inner { height: 56px; }
-      nav { gap: 16px; }
-      main { padding: 32px 16px 60px; }
-      .hero h1 { font-size: 28px; }
-      .hero p { font-size: 16px; }
-      .post-item { padding: 20px; }
-      .post-title { font-size: 17px; }
-      .post-detail h1 { font-size: 26px; }
+    .post-body { font-size: 17px; line-height: 1.9; max-width: 720px; }
+    .post-body p { margin-bottom: 24px; }
+    .post-body h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 48px 0 16px;
+      letter-spacing: -0.3px;
+    }
+    .post-body ul, .post-body ol { margin: 16px 0 24px 24px; }
+    .post-body li { margin-bottom: 8px; }
+    .post-body blockquote {
+      border-left: 2px solid var(--accent);
+      padding: 14px 24px;
+      background: var(--accent-light);
+      margin: 32px 0;
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text);
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-inner, main, footer { padding-left: 20px; padding-right: 20px; }
+      .hero { padding: 48px 0 40px; }
+      .hero h1 { font-size: 32px; }
+      .post-card { grid-template-columns: 1fr; gap: 12px; }
+      .post-day { font-size: 28px; color: var(--accent-light); }
+      .post-arrow { display: none; }
+      .feature-card { grid-template-columns: 1fr; }
+      .feature-visual { min-height: 200px; }
+      .feature-body { padding: 32px; }
+      .about-grid { grid-template-columns: 1fr; }
     }
 
     [hidden] { display: none !important; }
@@ -222,57 +488,70 @@
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <a href="#" class="logo" onclick="showHome(); return false;">我的博客</a>
-    <nav>
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-brand serif" onclick="showHome(); return false;">Blog.</a>
+    <div class="nav-links">
       <a href="#" class="active" onclick="showHome(); return false;">文章</a>
       <a href="#" onclick="showAbout(); return false;">关于</a>
-    </nav>
+    </div>
   </div>
-</header>
+</nav>
 
 <main>
-  <!-- Home View -->
+  <!-- Home -->
   <div id="home-view">
     <div class="hero">
-      <h1>记录思考，沉淀成长</h1>
-      <p>在这里分享工作心得、技术探索与生活感悟。每篇文章都是一次认真的思考。</p>
+      <div class="hero-eyebrow">思考 · 记录 · 成长</div>
+      <h1 class="serif">在碎片中寻找<br>值得留下的东西</h1>
+      <p class="hero-desc">工作心得、技术探索与生活感悟。每一篇文章都是一次认真的梳理。</p>
     </div>
 
-    <div class="posts-label">全部文章</div>
+    <div class="section-label">
+      <span class="section-title">近期文章</span>
+      <span class="section-count">共 <span id="post-count">0</span> 篇</span>
+    </div>
+
     <div class="post-list" id="post-list"></div>
 
-    <div class="about-section" onclick="showAbout(); return false;" style="cursor:pointer;">
-      <h2>关于我</h2>
-      <p>一枚喜欢折腾效率工具的普通人。这个博客用来记录所学、沉淀思考。欢迎交流！</p>
-    </div>
-  </div>
+    <div class="section-divider"><span>关于</span></div>
 
-  <!-- About View -->
-  <div id="about-view" class="post-detail" style="display:none;">
-    <a href="#" class="back-link" onclick="showHome(); return false;">← 返回文章列表</a>
-    <div class="post-header">
-      <h1>关于</h1>
-      <div class="post-meta">
-        <span class="post-date">2026年4月</span>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="serif">关于这个博客</h2>
+        <p>这里记录我在工作与生活交叉地带的思考——行政执法法制审核的数字化探索，个人效率工具的折腾，以及偶尔的读书笔记。</p>
+        <p>用 AI 和工具把重复的事变简单，然后把省下来的时间花在真正值得的事情上。</p>
+      </div>
+      <div class="about-aside">
+        <div class="aside-title">站点信息</div>
+        <div class="stat-list">
+          <div class="stat-item">
+            <span class="stat-value">2026</span>
+            <span class="stat-label">建于</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">重庆</span>
+            <span class="stat-label">所在地</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">WorkBuddy + AI</span>
+            <span class="stat-label">构建工具</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="post-content">
-      <p>你好，欢迎来到我的博客。</p>
-      <p>我是一个喜欢探索效率工具、折腾技术的人。工作之余喜欢写代码、做自动化，把重复的事情变得简单。</p>
-      <p>这个博客建于 2026 年，用 WorkBuddy + AI 生成，托管在 Vercel 上。</p>
-      <h2>联系方式</h2>
-      <p>如有交流想法，欢迎通过各种方式联系。</p>
-    </div>
   </div>
 
-  <!-- Post Detail View -->
-  <div id="post-detail-view" class="post-detail" style="display:none;"></div>
+  <!-- Post detail -->
+  <div id="post-detail">
+    <a href="#" class="back-link" onclick="showHome(); return false;">返回列表</a>
+    <div id="post-content"></div>
+  </div>
 </main>
 
 <footer>
-  © 2026 我的博客 · 用 WorkBuddy + AI 构建
+  <span class="footer-brand serif">Blog.</span>
+  <span class="footer-copy">© 2026 · 用心写，每一篇</span>
 </footer>
 
 <script>
@@ -361,60 +640,68 @@ const posts = [
   }
 ];
 
+function formatDate(dateStr) {
+  const [y, m, d] = dateStr.split('-');
+  return { day: d, monthYear: `${y}年${m}月` };
+}
+
 function renderPostList() {
   const container = document.getElementById('post-list');
-  container.innerHTML = posts.map(p => `
-    <a href="#" class="post-item" onclick="showPost(${p.id}); return false;">
-      <div class="post-meta">
-        <span class="post-date">${p.date}</span>
-        <span class="post-tag">${p.tag}</span>
+  document.getElementById('post-count').textContent = posts.length;
+  container.innerHTML = posts.map(p => {
+    const { day, monthYear } = formatDate(p.date);
+    return `
+      <div class="post-card" onclick="showPost(${p.id})">
+        <div class="post-date-block">
+          <div class="post-day">${day}</div>
+          <div class="post-month-year">${monthYear}</div>
+        </div>
+        <div class="post-body">
+          <span class="post-tag">${p.tag}</span>
+          <div class="post-title serif">${p.title}</div>
+          <div class="post-excerpt">${p.excerpt}</div>
+        </div>
+        <div class="post-arrow">→</div>
       </div>
-      <div class="post-title">${p.title}</div>
-      <div class="post-excerpt">${p.excerpt}</div>
-    </a>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function showHome() {
   document.getElementById('home-view').style.display = '';
-  document.getElementById('about-view').style.display = 'none';
-  document.getElementById('post-detail-view').style.display = 'none';
-  document.getElementById('post-detail-view').classList.remove('active');
-  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-  document.querySelector('nav a:first-child').classList.add('active');
-  window.scrollTo(0, 0);
+  document.getElementById('post-detail').style.display = 'none';
+  document.getElementById('post-detail').classList.remove('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelector('.nav-links a').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showAbout() {
-  document.getElementById('home-view').style.display = 'none';
-  document.getElementById('about-view').style.display = '';
-  document.getElementById('about-view').style.display = 'block';
-  document.getElementById('post-detail-view').style.display = 'none';
-  document.getElementById('post-detail-view').classList.remove('active');
-  document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-  document.querySelectorAll('nav a')[1].classList.add('active');
-  window.scrollTo(0, 0);
+  document.getElementById('home-view').style.display = '';
+  document.getElementById('post-detail').style.display = 'none';
+  document.getElementById('post-detail').classList.remove('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links a')[1].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showPost(id) {
   const post = posts.find(p => p.id === id);
   if (!post) return;
-  document.getElementById('post-detail-view').innerHTML = `
-    <a href="#" class="back-link" onclick="showHome(); return false;">← 返回文章列表</a>
+  document.getElementById('post-content').innerHTML = `
     <div class="post-header">
-      <h1>${post.title}</h1>
+      <span class="post-tag">${post.tag}</span>
+      <h1 class="serif">${post.title}</h1>
       <div class="post-meta">
-        <span class="post-date">${post.date}</span>
-        <span class="post-tag">${post.tag}</span>
+        <span>${post.date}</span>
       </div>
     </div>
-    <div class="post-content">${post.content}</div>
+    <div class="post-body">${post.content}</div>
   `;
   document.getElementById('home-view').style.display = 'none';
-  document.getElementById('about-view').style.display = 'none';
-  document.getElementById('post-detail-view').style.display = '';
-  document.getElementById('post-detail-view').classList.add('active');
-  window.scrollTo(0, 0);
+  document.getElementById('post-detail').style.display = '';
+  document.getElementById('post-detail').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 renderPostList();
