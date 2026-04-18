@@ -10,16 +10,19 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #f7f5f0;
-      --card: #ffffff;
-      --text: #1c1c1c;
-      --text-muted: #888;
-      --accent: #c07a4f;
-      --accent-light: #f3ebe3;
-      --border: #e8e4de;
-      --tag-bg: #f0ece4;
-      --tag-text: #8a6d5a;
+      --bg: #0c0e14;
+      --card: #13161f;
+      --card-hover: #1a1e2c;
+      --text: #e8eaf0;
+      --text-muted: #6b7280;
+      --accent: #4fc3f7;
+      --accent-dim: rgba(79,195,247,0.12);
+      --border: rgba(255,255,255,0.08);
+      --tag-bg: rgba(79,195,247,0.1);
+      --tag-text: #4fc3f7;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, sans-serif;
@@ -31,367 +34,334 @@
 
     .serif { font-family: 'Noto Serif SC', Georgia, serif; }
 
-    /* ── Navigation ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: rgba(247,245,240,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 40px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-brand {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: -0.5px;
-    }
-
-    .nav-links { display: flex; gap: 36px; align-items: center; }
-
-    .nav-links a {
-      text-decoration: none;
-      font-size: 13px;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      cursor: pointer;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
-
-    /* ── Layout ── */
-    main { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
-
     /* ── Hero ── */
     .hero {
-      padding: 80px 0 60px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 72px;
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&fit=crop');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 8s ease-out;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(12,14,20,0.2) 0%,
+        rgba(12,14,20,0.55) 50%,
+        rgba(12,14,20,0.92) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px;
+      padding: 0 24px;
+      animation: heroIn 1.2s ease-out both;
+    }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-eyebrow {
       font-size: 11px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      letter-spacing: 2px;
       color: var(--accent);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      gap: 12px;
     }
-    .hero-eyebrow::after {
+    .hero-eyebrow::before, .hero-eyebrow::after {
       content: '';
-      display: block;
-      width: 32px;
+      width: 40px;
       height: 1px;
       background: var(--accent);
+      opacity: 0.5;
     }
 
     .hero h1 {
       font-family: 'Noto Serif SC', serif;
-      font-size: clamp(36px, 5vw, 60px);
+      font-size: clamp(36px, 6vw, 72px);
       font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-      max-width: 760px;
-      margin-bottom: 28px;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      color: #ffffff;
     }
 
     .hero-desc {
-      font-size: 17px;
-      color: var(--text-muted);
-      max-width: 540px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 40px;
       line-height: 1.8;
     }
 
-    /* ── Section label ── */
-    .section-label {
+    /* Search bar */
+    .hero-search {
       display: flex;
       align-items: center;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px;
+      padding: 12px 20px;
+      max-width: 440px;
+      margin: 0 auto;
+      gap: 12px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .hero-search:focus-within {
+      border-color: var(--accent);
+      background: rgba(79,195,247,0.06);
+    }
+
+    .hero-search svg { color: var(--text-muted); flex-shrink: 0; }
+
+    .hero-search input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .hero-search input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── Section ── */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
       justify-content: space-between;
       margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
     }
 
     .section-title {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-    }
-
-    .section-count {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ── Post list ── */
-    .post-list { display: flex; flex-direction: column; gap: 0; }
-
-    .post-card {
-      display: grid;
-      grid-template-columns: 120px 1fr auto;
-      gap: 0 40px;
-      align-items: start;
-      padding: 36px 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: inherit;
-      transition: background 0.2s;
-      cursor: pointer;
-    }
-
-    .post-card:hover .post-title { color: var(--accent); }
-
-    .post-date-block { padding-top: 4px; }
-
-    .post-day {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 40px;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--border);
-      letter-spacing: -2px;
-      transition: color 0.3s;
-    }
-    .post-card:hover .post-day { color: var(--accent-light); }
-
-    .post-month-year {
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      margin-top: 4px;
-    }
-
-    .post-body {}
-
-    .post-tag {
-      display: inline-block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--tag-text);
-      background: var(--tag-bg);
-      padding: 3px 10px;
-      border-radius: 2px;
-      margin-bottom: 10px;
-    }
-
-    .post-title {
       font-family: 'Noto Serif SC', serif;
       font-size: 22px;
       font-weight: 600;
-      line-height: 1.4;
       letter-spacing: -0.3px;
-      margin-bottom: 10px;
-      transition: color 0.25s;
     }
 
-    .post-excerpt {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.75;
-      max-width: 580px;
-    }
-
-    .post-arrow {
-      font-size: 20px;
-      color: var(--border);
-      align-self: center;
-      transition: color 0.2s, transform 0.2s;
-      padding-left: 20px;
-    }
-    .post-card:hover .post-arrow {
-      color: var(--accent);
-      transform: translateX(4px);
-    }
-
-    /* ── Divider ── */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin: 72px 0 48px;
-    }
-    .section-divider::before {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .section-divider span {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── Feature post ── */
-    .feature-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 64px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: box-shadow 0.3s;
-    }
-    .feature-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
-
-    .feature-visual {
-      background: var(--accent-light);
-      min-height: 320px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 30% 40%, rgba(192,122,79,0.15) 0%, transparent 70%);
-    }
-
-    .feature-visual-text {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 80px;
-      font-weight: 700;
-      color: rgba(192,122,79,0.18);
-      user-select: none;
-    }
-
-    .feature-body { padding: 48px 48px 48px 0; display: flex; flex-direction: column; justify-content: center; }
-
-    .feature-label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .feature-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 26px;
-      font-weight: 700;
-      line-height: 1.4;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-
-    .feature-excerpt {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 28px;
-    }
-
-    .feature-meta {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .feature-date { font-size: 12px; color: var(--text-muted); }
-
-    .feature-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 500;
+    .section-more {
+      font-size: 12px;
       color: var(--accent);
       text-decoration: none;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
     }
-    .feature-cta::after { content: '→'; }
+    .section-more:hover { gap: 8px; }
 
-    /* ── About ── */
-    .about-grid {
+    /* ── Cards ── */
+    .cards-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
 
-    .about-text h2 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 20px;
-    }
-
-    .about-text p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.85;
-      margin-bottom: 16px;
-    }
-
-    .about-aside {
+    .card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 36px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
-    .aside-title {
-      font-size: 11px;
+    .card:hover {
+      border-color: rgba(79,195,247,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.85);
+      transition: filter 0.3s, transform 0.5s;
+    }
+
+    .card:hover .card-img { filter: brightness(0.95); transform: scale(1.03); }
+
+    .card-img-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-img-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, var(--card), transparent);
+    }
+
+    .card-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
+      color: #fff;
+      background: rgba(79,195,247,0.8);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .card-body { padding: 20px 22px 24px; }
+
+    .card-date {
+      font-size: 11px;
       color: var(--text-muted);
-      margin-bottom: 24px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
     }
 
-    .stat-list { display: flex; flex-direction: column; gap: 20px; }
-
-    .stat-item { display: flex; flex-direction: column; gap: 4px; }
-
-    .stat-value {
+    .card-title {
       font-family: 'Noto Serif SC', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -1px;
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.45;
+      letter-spacing: -0.2px;
+      margin-bottom: 10px;
+      transition: color 0.2s;
     }
 
-    .stat-label { font-size: 12px; color: var(--text-muted); }
+    .card:hover .card-title { color: var(--accent); }
+
+    .card-excerpt {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Author strip ── */
+    .author-strip {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .author-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+    }
+
+    .author-info h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .author-info p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .author-stats {
+      display: flex;
+      gap: 32px;
+    }
+
+    .author-stat { text-align: center; }
+    .author-stat-num {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .author-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     /* ── Footer ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px;
-      max-width: 1100px;
-      margin: 0 auto;
+      padding: 32px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .footer-brand {
@@ -401,10 +371,7 @@
       color: var(--text);
     }
 
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
+    .footer-copy { font-size: 12px; color: var(--text-muted); }
 
     /* ── Post detail ── */
     #post-detail { display: none; }
@@ -419,68 +386,94 @@
       letter-spacing: 1.5px;
       color: var(--text-muted);
       text-decoration: none;
-      margin-bottom: 56px;
-      padding-top: 48px;
+      margin-bottom: 48px;
+      padding-top: 60px;
       transition: color 0.2s;
     }
     .back-link:hover { color: var(--accent); }
     .back-link::before { content: '←'; }
 
-    .post-header { margin-bottom: 48px; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
-
-    .post-header .post-tag { margin-bottom: 20px; }
-
-    .post-header h1 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(28px, 4vw, 48px);
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.2;
-      margin-bottom: 20px;
+    .post-hero {
+      position: relative;
+      height: 420px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 48px;
     }
 
-    .post-header .post-meta {
-      font-size: 13px;
-      color: var(--text-muted);
+    .post-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.6);
+    }
+
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,14,20,0.8) 0%, transparent 60%);
       display: flex;
-      gap: 16px;
+      align-items: flex-end;
+      padding: 40px;
     }
+
+    .post-hero-text { position: relative; z-index: 1; }
+
+    .post-hero .post-tag {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #fff;
+      background: rgba(79,195,247,0.8);
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 16px;
+    }
+
+    .post-hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(24px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .post-header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+    .post-header .post-tag { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tag-text); background: var(--tag-bg); padding: 4px 12px; border-radius: 3px; margin-bottom: 16px; }
+    .post-header h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px; }
+    .post-header .post-meta { font-size: 13px; color: var(--text-muted); }
 
     .post-body { font-size: 17px; line-height: 1.9; max-width: 720px; }
     .post-body p { margin-bottom: 24px; }
-    .post-body h2 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 24px;
-      font-weight: 700;
-      margin: 48px 0 16px;
-      letter-spacing: -0.3px;
-    }
+    .post-body h2 { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.3px; }
     .post-body ul, .post-body ol { margin: 16px 0 24px 24px; }
     .post-body li { margin-bottom: 8px; }
     .post-body blockquote {
       border-left: 2px solid var(--accent);
       padding: 14px 24px;
-      background: var(--accent-light);
+      background: var(--accent-dim);
       margin: 32px 0;
+      border-radius: 0 4px 4px 0;
       font-family: 'Noto Serif SC', serif;
       font-size: 18px;
       line-height: 1.7;
       color: var(--text);
-      border-radius: 0 3px 3px 0;
     }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .nav-inner, main, footer { padding-left: 20px; padding-right: 20px; }
-      .hero { padding: 48px 0 40px; }
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .author-strip { grid-template-columns: 1fr; }
+      .author-stats { justify-content: flex-start; }
+    }
+
+    @media (max-width: 600px) {
+      .section, footer { padding-left: 20px; padding-right: 20px; }
+      .cards-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 32px; }
-      .post-card { grid-template-columns: 1fr; gap: 12px; }
-      .post-day { font-size: 28px; color: var(--accent-light); }
-      .post-arrow { display: none; }
-      .feature-card { grid-template-columns: 1fr; }
-      .feature-visual { min-height: 200px; }
-      .feature-body { padding: 32px; }
-      .about-grid { grid-template-columns: 1fr; }
+      .author-strip { padding: 28px; }
     }
 
     [hidden] { display: none !important; }
@@ -488,73 +481,74 @@
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="nav-brand serif" onclick="showHome(); return false;">Blog.</a>
-    <div class="nav-links">
-      <a href="#" class="active" onclick="showHome(); return false;">文章</a>
-      <a href="#" onclick="showAbout(); return false;">关于</a>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">思考 · 记录 · 成长</div>
+    <h1 class="serif">在碎片中寻找<br>值得留下的东西</h1>
+    <p class="hero-desc">工作心得、技术探索与生活感悟。每一次落笔，都是一次认真的梳理。</p>
+    <div class="hero-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="搜索文章..." />
     </div>
   </div>
-</nav>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</div>
 
-<main>
-  <!-- Home -->
-  <div id="home-view">
-    <div class="hero">
-      <div class="hero-eyebrow">思考 · 记录 · 成长</div>
-      <h1 class="serif">在碎片中寻找<br>值得留下的东西</h1>
-      <p class="hero-desc">工作心得、技术探索与生活感悟。每一篇文章都是一次认真的梳理。</p>
+<!-- Cards -->
+<div class="section">
+  <div class="section-head">
+    <span class="section-title serif">近期文章</span>
+    <span style="font-size:12px;color:var(--text-muted);">共 <span id="post-count">0</span> 篇</span>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+</div>
+
+<!-- Author -->
+<div class="section">
+  <div class="author-strip">
+    <img class="author-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&fit=crop&crop=face&q=80" alt="avatar">
+    <div class="author-info">
+      <h3 class="serif">关于作者</h3>
+      <p>一枚喜欢折腾效率工具的普通人。工作之余喜欢写代码、做自动化，把重复的事情变得简单。这个博客用来记录所学、沉淀思考。</p>
     </div>
-
-    <div class="section-label">
-      <span class="section-title">近期文章</span>
-      <span class="section-count">共 <span id="post-count">0</span> 篇</span>
-    </div>
-
-    <div class="post-list" id="post-list"></div>
-
-    <div class="section-divider"><span>关于</span></div>
-
-    <div class="about-grid">
-      <div class="about-text">
-        <h2 class="serif">关于这个博客</h2>
-        <p>这里记录我在工作与生活交叉地带的思考——行政执法法制审核的数字化探索，个人效率工具的折腾，以及偶尔的读书笔记。</p>
-        <p>用 AI 和工具把重复的事变简单，然后把省下来的时间花在真正值得的事情上。</p>
+    <div class="author-stats">
+      <div class="author-stat">
+        <div class="author-stat-num" id="post-count-2">0</div>
+        <div class="author-stat-label">文章</div>
       </div>
-      <div class="about-aside">
-        <div class="aside-title">站点信息</div>
-        <div class="stat-list">
-          <div class="stat-item">
-            <span class="stat-value">2026</span>
-            <span class="stat-label">建于</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">重庆</span>
-            <span class="stat-label">所在地</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">WorkBuddy + AI</span>
-            <span class="stat-label">构建工具</span>
-          </div>
-        </div>
+      <div class="author-stat">
+        <div class="author-stat-num">重庆</div>
+        <div class="author-stat-label">所在地</div>
       </div>
     </div>
   </div>
-
-  <!-- Post detail -->
-  <div id="post-detail">
-    <a href="#" class="back-link" onclick="showHome(); return false;">返回列表</a>
-    <div id="post-content"></div>
-  </div>
-</main>
+</div>
 
 <footer>
   <span class="footer-brand serif">Blog.</span>
   <span class="footer-copy">© 2026 · 用心写，每一篇</span>
 </footer>
 
+<!-- Post Detail -->
+<div id="post-detail" class="section">
+  <a href="#" class="back-link" onclick="showHome(); return false;">返回首页</a>
+  <div id="post-content"></div>
+</div>
+
 <script>
+const cardImages = [
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fit=crop',
+  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&fit=crop',
+  'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80&fit=crop',
+  'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=600&q=80&fit=crop',
+];
+
 const posts = [
   {
     id: 1,
@@ -640,71 +634,73 @@ const posts = [
   }
 ];
 
-function formatDate(dateStr) {
-  const [y, m, d] = dateStr.split('-');
-  return { day: d, monthYear: `${y}年${m}月` };
-}
+const postHeroImages = [
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=85&fit=crop',
+  'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1200&q=85&fit=crop',
+];
 
-function renderPostList() {
-  const container = document.getElementById('post-list');
+function renderCards() {
+  const grid = document.getElementById('cards-grid');
   document.getElementById('post-count').textContent = posts.length;
-  container.innerHTML = posts.map(p => {
-    const { day, monthYear } = formatDate(p.date);
-    return `
-      <div class="post-card" onclick="showPost(${p.id})">
-        <div class="post-date-block">
-          <div class="post-day">${day}</div>
-          <div class="post-month-year">${monthYear}</div>
-        </div>
-        <div class="post-body">
-          <span class="post-tag">${p.tag}</span>
-          <div class="post-title serif">${p.title}</div>
-          <div class="post-excerpt">${p.excerpt}</div>
-        </div>
-        <div class="post-arrow">→</div>
+  document.getElementById('post-count-2').textContent = posts.length;
+  grid.innerHTML = posts.map((p, i) => `
+    <div class="card" onclick="showPost(${p.id})">
+      <div class="card-img-wrap">
+        <img class="card-img" src="${cardImages[i % cardImages.length]}" alt="${p.title}" loading="lazy">
+        <div class="card-img-overlay"></div>
+        <span class="card-tag">${p.tag}</span>
       </div>
-    `;
-  }).join('');
+      <div class="card-body">
+        <div class="card-date">${p.date}</div>
+        <div class="card-title serif">${p.title}</div>
+        <div class="card-excerpt">${p.excerpt}</div>
+      </div>
+    </div>
+  `).join('');
 }
 
 function showHome() {
-  document.getElementById('home-view').style.display = '';
+  document.querySelector('.hero').style.display = '';
+  document.querySelector('.section').closest('main') || document.querySelector('.hero').nextElementSibling.style.display = '';
   document.getElementById('post-detail').style.display = 'none';
   document.getElementById('post-detail').classList.remove('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.querySelector('.nav-links a').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showAbout() {
-  document.getElementById('home-view').style.display = '';
-  document.getElementById('post-detail').style.display = 'none';
-  document.getElementById('post-detail').classList.remove('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.querySelectorAll('.nav-links a')[1].classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.style.display = '');
+  document.querySelector('footer').style.display = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showPost(id) {
-  const post = posts.find(p => p.id === id);
+  const idx = posts.findIndex(p => p.id === id);
+  const post = posts[idx];
   if (!post) return;
   document.getElementById('post-content').innerHTML = `
-    <div class="post-header">
-      <span class="post-tag">${post.tag}</span>
-      <h1 class="serif">${post.title}</h1>
-      <div class="post-meta">
-        <span>${post.date}</span>
+    <div class="post-hero">
+      <img src="${postHeroImages[idx % postHeroImages.length]}" alt="${post.title}">
+      <div class="post-hero-overlay">
+        <div class="post-hero-text">
+          <div class="post-tag">${post.tag}</div>
+          <h1 class="serif">${post.title}</h1>
+        </div>
       </div>
+    </div>
+    <div class="post-header">
+      <div class="post-tag">${post.tag}</div>
+      <h1 class="serif">${post.title}</h1>
+      <div class="post-meta">${post.date}</div>
     </div>
     <div class="post-body">${post.content}</div>
   `;
-  document.getElementById('home-view').style.display = 'none';
+  document.querySelector('.hero').style.display = 'none';
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.querySelector('footer').style.display = 'none';
   document.getElementById('post-detail').style.display = '';
   document.getElementById('post-detail').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-renderPostList();
+renderCards();
 </script>
 
 </body>
