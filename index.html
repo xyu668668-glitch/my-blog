@@ -1,62 +1,50 @@
 <!DOCTYPE html>
-<html class="light" lang="zh-CN"><head>
+<html lang="zh-CN"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Ianning · 个人工具索引</title>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Source+Serif+4:wght@600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Source+Serif+4:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
   tailwind.config = {
-    darkMode: "class",
     theme: { extend: {
       colors: {
-        "on-primary-fixed": "#041a3f", "inverse-primary": "#b4c6f4", "tertiary": "#0f0800",
-        "tertiary-container": "#2d1e00", "on-surface": "#191c1e", "tertiary-fixed-dim": "#e9c176",
-        "on-primary-fixed-variant": "#34466d", "on-error": "#ffffff", "outline": "#75777f",
-        "on-surface-variant": "#44464e", "tertiary-fixed": "#ffdea5", "secondary-fixed-dim": "#bdc7dc",
-        "inverse-on-surface": "#eff1f3", "surface": "#f7f9fb", "surface-dim": "#d8dadc",
-        "on-secondary-fixed-variant": "#3d4759", "on-secondary": "#ffffff", "surface-container": "#eceef0",
-        "on-primary-container": "#7687b2", "on-tertiary-fixed": "#261900", "secondary-fixed": "#d9e3f9",
-        "on-secondary-fixed": "#121c2c", "on-background": "#191c1e", "primary-fixed-dim": "#b4c6f4",
-        "error-container": "#ffdad6", "surface-variant": "#e0e3e5", "primary-container": "#0a1f44",
-        "surface-container-low": "#f2f4f6", "surface-container-highest": "#e0e3e5",
-        "surface-container-lowest": "#ffffff", "surface-tint": "#4c5e86", "on-primary": "#ffffff",
-        "primary": "#00081e", "on-tertiary-fixed-variant": "#5d4201", "on-error-container": "#93000a",
-        "primary-fixed": "#d9e2ff", "error": "#ba1a1a", "outline-variant": "#c5c6cf",
-        "on-tertiary-container": "#a5833f", "background": "#f7f9fb", "on-tertiary": "#ffffff",
-        "surface-container-high": "#e6e8ea", "on-secondary-container": "#596376",
-        "secondary-container": "#d6e0f6", "secondary": "#555f71", "surface-bright": "#f7f9fb",
-        "inverse-surface": "#2d3133"
+        bg: "#101216", sidebar: "#0b0d10", panel: "#171a20", "panel-2": "#1c2028",
+        line: "#282d37", "line-soft": "#20242c", ink: "#e8eaee", muted: "#969ca7",
+        faint: "#626873", accent: "#2dd4bf", "accent-bright": "#5eead4",
+        "accent-dim": "rgba(45,212,191,0.12)", "accent-line": "rgba(45,212,191,0.30)"
       },
-      borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
-      spacing: { "section-gap": "48px", "card-padding": "24px", "gutter": "24px", "unit": "4px", "container-padding": "32px" },
+      borderRadius: { "DEFAULT": "0.125rem", "lg": "0.375rem", "xl": "0.625rem" },
+      spacing: { "section-gap": "48px", "card-padding": "24px", "gutter": "24px", "container-padding": "32px" },
       fontFamily: {
-        "headline-md": ["\"Source Serif 4\""], "display-lg-mobile": ["\"Source Serif 4\""],
-        "title-sm": ["Hanken Grotesk"], "label-caps": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"],
-        "data-mono": ["JetBrains Mono"], "display-lg": ["\"Source Serif 4\""]
+        "serif4": ["\"Source Serif 4\""], "grotesk": ["Hanken Grotesk"], "mono": ["JetBrains Mono"]
       },
       fontSize: {
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
         "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
         "title-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.09em", "fontWeight": "700"}],
         "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+        "data-mono": ["13px", {"lineHeight": "20px", "fontWeight": "400"}]
       }
     } }
   }
 </script>
 <style>
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
-  body { background-color: #f7f9fb; font-family: 'Hanken Grotesk', sans-serif; }
+  body { background-color: #101216; font-family: 'Hanken Grotesk', sans-serif; }
   .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
-  .fade-up { opacity: 0; transform: translateY(10px); }
-  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 2px; }
   html { scroll-behavior: smooth; }
   section[id] { scroll-margin-top: 96px; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .rise { animation: rise .55s cubic-bezier(.16,.84,.44,1) both; }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(45,212,191,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45,212,191,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
   @media (max-width: 1024px) {
     aside.sidenav { transform: translateX(-100%); transition: transform .3s ease; }
     aside.sidenav.open { transform: translateX(0); }
@@ -64,47 +52,45 @@
   }
 </style>
 </head>
-<body class="text-on-background">
+<body class="text-ink">
 
 <!-- SideNavBar -->
-<aside class="sidenav fixed left-0 top-0 h-screen w-[280px] bg-primary flex flex-col overflow-y-auto border-r border-outline-variant z-50">
-  <div class="px-6 py-8">
-    <h1 class="text-headline-md font-headline-md text-primary-fixed tracking-tight">Ianning</h1>
-    <p class="text-label-caps font-label-caps text-on-primary-fixed-variant mt-1">Personal Portfolio</p>
+<aside class="sidenav fixed left-0 top-0 h-screen w-[280px] bg-sidebar flex flex-col overflow-y-auto border-r border-line z-50">
+  <div class="px-6 py-8 border-b border-line-soft">
+    <h1 class="font-serif4 text-headline-md text-ink tracking-tight">Ianning</h1>
+    <p class="font-grotesk text-label-caps text-faint mt-1">TOOLS PORTFOLIO</p>
   </div>
-  <nav class="flex-1 space-y-1">
-    <a class="flex items-center gap-x-4 px-6 py-4 text-on-primary-fixed border-l-4 border-tertiary-fixed bg-on-primary-fixed-variant/10 transition-all font-label-caps text-label-caps" href="#profile">
-      <span class="material-symbols-outlined">person</span> 个人介绍
+  <nav class="flex-1 py-3">
+    <a class="flex items-center gap-x-3 px-6 py-3.5 text-ink border-l-2 border-accent bg-accent-dim font-grotesk text-label-caps" href="#tools">
+      <span class="material-symbols-outlined text-accent">grid_view</span> 工具展示
     </a>
-    <a class="flex items-center gap-x-4 px-6 py-4 text-on-primary-fixed-variant hover:text-on-primary-fixed hover:bg-on-primary-fixed-variant/5 transition-colors font-label-caps text-label-caps border-l-4 border-transparent" href="#tools">
-      <span class="material-symbols-outlined">grid_view</span> 工具展示
+    <div class="px-6 pt-8 pb-2 font-grotesk text-label-caps text-faint">外部链接</div>
+    <a class="flex items-center gap-x-3 px-6 py-3 text-muted hover:text-ink hover:bg-white/5 transition-colors font-grotesk text-[13px]" href="https://github.com/xyu668668-glitch" target="_blank" rel="noopener">
+      <span class="material-symbols-outlined text-[20px]">code</span> GitHub
+    </a>
+    <a class="flex items-center gap-x-3 px-6 py-3 text-muted hover:text-ink hover:bg-white/5 transition-colors font-grotesk text-[13px]" href="mailto:xyu668668@gmail.com">
+      <span class="material-symbols-outlined text-[20px]">mail</span> Email
     </a>
   </nav>
-  <div class="p-6 mt-auto">
-    <a href="#tools" class="block w-full text-center py-3 px-4 bg-primary-fixed text-primary font-title-sm text-title-sm rounded-lg hover:opacity-90 transition-opacity">进入工具集</a>
-    <div class="mt-8 flex items-center gap-3">
-      <img class="w-10 h-10 rounded-full object-cover border border-on-primary-fixed-variant/40" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=160&h=160&fit=crop&crop=faces&q=80" alt="Ianning"/>
-      <div>
-        <p class="text-label-caps font-label-caps text-on-primary-fixed">Ianning</p>
-        <p class="text-[10px] text-on-primary-fixed-variant opacity-70">重庆 · Data / Law / Investment</p>
-      </div>
-    </div>
+  <div class="p-6 mt-auto border-t border-line-soft">
+    <a href="#tools" class="block w-full text-center py-3 px-4 bg-accent text-bg font-grotesk text-title-sm rounded-lg hover:bg-accent-bright transition-colors">进入工具集</a>
+    <p class="mt-6 font-mono text-[11px] text-faint leading-relaxed">重庆 · Chongqing<br>AI / Data / Investment</p>
   </div>
 </aside>
 
 <!-- TopAppBar -->
-<header class="topbar fixed top-0 left-0 right-0 h-16 flex justify-between items-center pl-[280px] px-gutter bg-surface border-b border-surface-variant z-40">
+<header class="topbar fixed top-0 left-0 right-0 h-16 flex justify-between items-center pl-[280px] px-gutter bg-bg/90 backdrop-blur border-b border-line z-40">
   <div class="flex items-center gap-3">
-    <button id="menuBtn" class="material-symbols-outlined lg:hidden text-on-surface-variant" aria-label="menu">menu</button>
-    <nav class="flex items-center gap-2 text-label-caps font-label-caps text-on-surface-variant">
-      <span>Portfolio</span>
+    <button id="menuBtn" class="material-symbols-outlined lg:hidden text-muted" aria-label="menu">menu</button>
+    <nav class="flex items-center gap-2 font-grotesk text-label-caps text-faint">
+      <span>PORTFOLIO</span>
       <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-      <span class="text-primary font-bold">个人首页</span>
+      <span class="text-accent">工具集</span>
     </nav>
   </div>
   <div class="flex items-center gap-4 pr-1">
-    <a href="mailto:xyu668668@gmail.com" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" title="Email">mail</a>
-    <a href="https://github.com/xyu668668-glitch" target="_blank" rel="noopener" class="text-on-surface-variant hover:text-primary transition-colors flex items-center" title="GitHub">
+    <a href="mailto:xyu668668@gmail.com" class="material-symbols-outlined text-muted hover:text-accent transition-colors" title="Email">mail</a>
+    <a href="https://github.com/xyu668668-glitch" target="_blank" rel="noopener" class="text-muted hover:text-accent transition-colors flex items-center" title="GitHub">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.9 18.3 5.2 18.3 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
     </a>
   </div>
@@ -112,165 +98,121 @@
 
 <!-- Main Content Canvas -->
 <main class="canvas pl-[280px] pt-16 min-h-screen">
-  <div class="max-w-[1440px] mx-auto p-container-padding">
-
-    <!-- Page Header -->
-    <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
-      <div>
-        <div class="text-label-caps font-label-caps text-on-tertiary-container mb-3">AI · DATA · LAW · INVESTMENT</div>
-        <h2 class="text-display-lg font-display-lg text-primary">Ianning</h2>
-        <p class="text-body-md font-body-md text-on-surface-variant mt-3 max-w-2xl">
-          关注 AI、数据、法制审核与投资研究。这个页面收纳我持续打磨的个人工具，把复杂问题整理成更清楚、可复用的工作流。
-        </p>
-      </div>
-      <div class="flex gap-3 shrink-0">
-        <a href="mailto:xyu668668@gmail.com" class="flex items-center gap-2 px-6 py-3 border border-primary text-primary font-label-caps text-label-caps rounded hover:bg-primary-fixed transition-colors">
-          <span class="material-symbols-outlined text-[18px]">mail</span> 联系我
-        </a>
-        <a href="#tools" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity shadow-sm">
-          <span class="material-symbols-outlined text-[18px]">grid_view</span> 工具集
-        </a>
+  <!-- Header band with subtle tech grid -->
+  <div class="grid-bg border-b border-line">
+    <div class="max-w-[1440px] mx-auto px-container-padding pt-12 pb-10">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+        <div>
+          <div class="font-grotesk text-label-caps text-accent mb-3">AI · DATA · INVESTMENT · TOOLKIT</div>
+          <h2 class="font-serif4 text-display-lg text-ink">工具集</h2>
+          <p class="font-grotesk text-body-md text-muted mt-3 max-w-2xl">
+            持续打磨的个人工具索引。围绕基金投资与数据信号，把判断之前需要看清的信息整理清楚，形成可复用的工作流。
+          </p>
+          <div class="mt-5 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[12px] text-faint">
+            <span><span class="text-accent">04</span> Tools online</span>
+            <span>Fund · ETF · Index</span>
+            <span>Less interface, more workflow.</span>
+          </div>
+        </div>
+        <div class="flex gap-3 shrink-0">
+          <a href="mailto:xyu668668@gmail.com" class="flex items-center gap-2 px-5 py-3 border border-line text-ink font-grotesk text-label-caps rounded-lg hover:border-accent hover:text-accent transition-colors">
+            <span class="material-symbols-outlined text-[18px]">mail</span> 联系我
+          </a>
+          <a href="https://github.com/xyu668668-glitch" target="_blank" rel="noopener" class="flex items-center gap-2 px-5 py-3 bg-accent text-bg font-grotesk text-label-caps rounded-lg hover:bg-accent-bright transition-colors">
+            <span class="material-symbols-outlined text-[18px]">code</span> GitHub
+          </a>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- Section: Profile -->
-    <section id="profile" class="mb-section-gap">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Profile</span>
-        <span class="h-px flex-1 bg-outline-variant"></span>
-        <span class="text-label-caps font-label-caps text-on-surface-variant">个人介绍</span>
-      </div>
-      <div class="bento-grid">
-        <!-- Portrait -->
-        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant p-card-padding fade-up">
-          <div class="aspect-[4/5] overflow-hidden bg-surface-container">
-            <img class="w-full h-full object-cover" style="filter:grayscale(1) contrast(1.03)" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=900&q=84&fit=crop&crop=faces" alt="Ianning"/>
-          </div>
-          <div class="mt-5 flex items-center justify-between">
-            <div>
-              <p class="text-title-sm font-title-sm text-primary">Ianning</p>
-              <p class="text-label-caps font-label-caps text-on-surface-variant mt-1">重庆 · Chongqing</p>
-            </div>
-            <span class="text-[10px] font-label-caps text-on-tertiary-container bg-tertiary-fixed px-2 py-0.5 rounded">持续打磨</span>
-          </div>
-        </div>
-        <!-- Bio + facts -->
-        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col fade-up">
-          <h3 class="text-headline-md font-headline-md text-primary">Less interface, more workflow.</h3>
-          <p class="text-body-md font-body-md text-on-surface-variant mt-4 leading-relaxed">
-            我不是科班出身的工程师，只是一个喜欢把日常里的复杂问题拆开、再用工具重新组织起来的人。围绕 AI、数据、法制审核与长期主义投资，我持续搭建一些小而实用的个人工具——它们不追求花哨的界面，而是尽量把“判断之前需要看清的信息”整理清楚，形成可以反复复用的工作流。
-          </p>
-          <p class="text-body-md font-body-md text-on-surface-variant mt-4 leading-relaxed">
-            比起“做完一次”，我更在意“能不能长期沉淀”。这也是这个页面存在的意义：把散落的工具收成一个索引，慢慢生长。
-          </p>
-          <div class="mt-auto pt-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 border-t border-surface-variant mt-8">
-            <div>
-              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">关注领域</p>
-              <p class="text-body-md font-body-md text-primary mt-1">AI · 数据</p>
-            </div>
-            <div>
-              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">研究方向</p>
-              <p class="text-body-md font-body-md text-primary mt-1">法制审核 · 投资</p>
-            </div>
-            <div>
-              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">所在地</p>
-              <p class="text-body-md font-body-md text-primary mt-1">重庆</p>
-            </div>
-            <div>
-              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">定位</p>
-              <p class="text-body-md font-body-md text-primary mt-1">个人工具索引</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+  <div class="max-w-[1440px] mx-auto p-container-padding">
     <!-- Section: Tools -->
-    <section id="tools" class="mb-section-gap">
+    <section id="tools">
       <div class="flex items-center gap-3 mb-6">
-        <span class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Tools</span>
-        <span class="h-px flex-1 bg-outline-variant"></span>
-        <span class="text-label-caps font-label-caps text-on-surface-variant">工具展示 · 04</span>
+        <span class="font-grotesk text-label-caps text-muted uppercase tracking-widest">Tools</span>
+        <span class="h-px flex-1 bg-line"></span>
+        <span class="font-grotesk text-label-caps text-faint">工具展示 · 04</span>
       </div>
       <div class="bento-grid">
 
         <!-- Tool 01: Trend -->
-        <a href="https://vercel-fund-wave.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+        <a href="https://vercel-fund-wave.vercel.app/" target="_blank" rel="noopener" class="group rise col-span-12 lg:col-span-6 bg-panel border border-line p-card-padding rounded-lg flex flex-col hover:border-accent-line hover:shadow-[0_0_0_1px_rgba(45,212,191,0.25),0_18px_50px_-24px_rgba(45,212,191,0.35)] transition-all" style="animation-delay:.04s">
           <div class="flex justify-between items-start mb-5">
             <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">trending_up</span>
+              <span class="material-symbols-outlined text-accent bg-accent-dim w-11 h-11 flex items-center justify-center rounded-lg">trending_up</span>
               <div>
-                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 01</p>
-                <h3 class="text-title-sm font-title-sm text-primary">趋势分析</h3>
+                <p class="font-grotesk text-label-caps text-accent">TOOL 01</p>
+                <h3 class="font-serif4 text-title-sm text-ink">趋势分析</h3>
               </div>
             </div>
-            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+            <span class="material-symbols-outlined text-faint group-hover:text-accent group-hover:translate-x-1 transition-all">arrow_outward</span>
           </div>
-          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金代码，查看趋势强弱、波段位置、回撤和白话建议。它不替代判断，而是把判断前的信息整理清楚。</p>
-          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">基金投资 / 数据信号</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">趋势、回撤、波段、历史统计</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用，持续迭代</span></div>
+          <p class="font-grotesk text-body-md text-muted leading-relaxed">输入基金代码，查看趋势强弱、波段位置、回撤和白话建议。它不替代判断，而是把判断前的信息整理清楚。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-grotesk border-t border-line-soft mt-6">
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">类型</span><span class="text-ink">基金投资 / 数据信号</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">方法</span><span class="text-ink">趋势、回撤、波段、历史统计</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">状态</span><span class="text-ink flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>线上可用，持续迭代</span></div>
           </div>
         </a>
 
         <!-- Tool 02: Drawdown -->
-        <a href="https://drawdown-tool.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+        <a href="https://drawdown-tool.vercel.app/" target="_blank" rel="noopener" class="group rise col-span-12 lg:col-span-6 bg-panel border border-line p-card-padding rounded-lg flex flex-col hover:border-accent-line hover:shadow-[0_0_0_1px_rgba(45,212,191,0.25),0_18px_50px_-24px_rgba(45,212,191,0.35)] transition-all" style="animation-delay:.10s">
           <div class="flex justify-between items-start mb-5">
             <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">show_chart</span>
+              <span class="material-symbols-outlined text-accent bg-accent-dim w-11 h-11 flex items-center justify-center rounded-lg">show_chart</span>
               <div>
-                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 02</p>
-                <h3 class="text-title-sm font-title-sm text-primary">组合回撤</h3>
+                <p class="font-grotesk text-label-caps text-accent">TOOL 02</p>
+                <h3 class="font-serif4 text-title-sm text-ink">组合回撤</h3>
               </div>
             </div>
-            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+            <span class="material-symbols-outlined text-faint group-hover:text-accent group-hover:translate-x-1 transition-all">arrow_outward</span>
           </div>
-          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金或 ETF 代码和目标仓位，回测组合资金曲线、最大回撤、定投和再平衡效果，用来观察组合风险。</p>
-          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">组合回测 / 回撤分析</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">累计净值、定投、再平衡、基准对比</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          <p class="font-grotesk text-body-md text-muted leading-relaxed">输入基金或 ETF 代码和目标仓位，回测组合资金曲线、最大回撤、定投和再平衡效果，用来观察组合风险。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-grotesk border-t border-line-soft mt-6">
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">类型</span><span class="text-ink">组合回测 / 回撤分析</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">方法</span><span class="text-ink">累计净值、定投、再平衡、基准对比</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">状态</span><span class="text-ink flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>线上可用</span></div>
           </div>
         </a>
 
         <!-- Tool 03: Grid -->
-        <a href="https://grid-strategy-lab.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+        <a href="https://grid-strategy-lab.vercel.app/" target="_blank" rel="noopener" class="group rise col-span-12 lg:col-span-6 bg-panel border border-line p-card-padding rounded-lg flex flex-col hover:border-accent-line hover:shadow-[0_0_0_1px_rgba(45,212,191,0.25),0_18px_50px_-24px_rgba(45,212,191,0.35)] transition-all" style="animation-delay:.16s">
           <div class="flex justify-between items-start mb-5">
             <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">grid_on</span>
+              <span class="material-symbols-outlined text-accent bg-accent-dim w-11 h-11 flex items-center justify-center rounded-lg">grid_on</span>
               <div>
-                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 03</p>
-                <h3 class="text-title-sm font-title-sm text-primary">网格策略</h3>
+                <p class="font-grotesk text-label-caps text-accent">TOOL 03</p>
+                <h3 class="font-serif4 text-title-sm text-ink">网格策略</h3>
               </div>
             </div>
-            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+            <span class="material-symbols-outlined text-faint group-hover:text-accent group-hover:translate-x-1 transition-all">arrow_outward</span>
           </div>
-          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金、ETF 或指数代码，自动测算 5 套价格触发规则和 5 套资金方案，比较收益、回撤、仓位和历史滚动胜率。</p>
-          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">网格策略 / 资金方案回测</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">触发规则、资金计划、滚动概率、满仓对比</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          <p class="font-grotesk text-body-md text-muted leading-relaxed">输入基金、ETF 或指数代码，自动测算 5 套价格触发规则和 5 套资金方案，比较收益、回撤、仓位和历史滚动胜率。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-grotesk border-t border-line-soft mt-6">
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">类型</span><span class="text-ink">网格策略 / 资金方案回测</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">方法</span><span class="text-ink">触发规则、资金计划、滚动概率、满仓对比</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">状态</span><span class="text-ink flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>线上可用</span></div>
           </div>
         </a>
 
         <!-- Tool 04: Scanner -->
-        <a href="https://fund-signal-scanner.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+        <a href="https://fund-signal-scanner.vercel.app/" target="_blank" rel="noopener" class="group rise col-span-12 lg:col-span-6 bg-panel border border-line p-card-padding rounded-lg flex flex-col hover:border-accent-line hover:shadow-[0_0_0_1px_rgba(45,212,191,0.25),0_18px_50px_-24px_rgba(45,212,191,0.35)] transition-all" style="animation-delay:.22s">
           <div class="flex justify-between items-start mb-5">
             <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">radar</span>
+              <span class="material-symbols-outlined text-accent bg-accent-dim w-11 h-11 flex items-center justify-center rounded-lg">radar</span>
               <div>
-                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 04</p>
-                <h3 class="text-title-sm font-title-sm text-primary">信号扫描</h3>
+                <p class="font-grotesk text-label-caps text-accent">TOOL 04</p>
+                <h3 class="font-serif4 text-title-sm text-ink">信号扫描</h3>
               </div>
             </div>
-            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+            <span class="material-symbols-outlined text-faint group-hover:text-accent group-hover:translate-x-1 transition-all">arrow_outward</span>
           </div>
-          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">批量扫描基金净值位置、趋势强弱、回撤修复和历史相似胜率，把今日基金板块、波段信号和风险名单整理成观察清单。</p>
-          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">基金扫描 / 机会观察</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">低位高位、趋势强弱、回撤修复、历史胜率</span></div>
-            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          <p class="font-grotesk text-body-md text-muted leading-relaxed">批量扫描基金净值位置、趋势强弱、回撤修复和历史相似胜率，把今日基金板块、波段信号和风险名单整理成观察清单。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-grotesk border-t border-line-soft mt-6">
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">类型</span><span class="text-ink">基金扫描 / 机会观察</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">方法</span><span class="text-ink">低位高位、趋势强弱、回撤修复、历史胜率</span></div>
+            <div class="flex gap-3"><span class="text-faint w-10 shrink-0">状态</span><span class="text-ink flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent"></span>线上可用</span></div>
           </div>
         </a>
 
@@ -278,24 +220,18 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-outline-variant pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+    <footer class="border-t border-line pt-8 mt-section-gap flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
       <div>
-        <p class="text-title-sm font-title-sm text-primary">Ianning · Tools Portfolio Index</p>
-        <p class="text-label-caps font-label-caps text-on-surface-variant mt-1">Less interface, more workflow.</p>
+        <p class="font-serif4 text-title-sm text-ink">Ianning · Tools Portfolio Index</p>
+        <p class="font-mono text-[12px] text-faint mt-1">Less interface, more workflow.</p>
       </div>
-      <p class="text-label-caps font-label-caps text-on-surface-variant">© 2026 · 重庆 · Data / Law / Investment</p>
+      <p class="font-mono text-[12px] text-faint">© 2026 · 重庆 · Data / Investment</p>
     </footer>
-
   </div>
 </main>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const items = document.querySelectorAll('.fade-up');
-    items.forEach((el, i) => {
-      el.style.transition = `all .45s ease-out ${i * 0.06}s`;
-      requestAnimationFrame(() => { setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 60); });
-    });
     const menuBtn = document.getElementById('menuBtn');
     const aside = document.querySelector('aside.sidenav');
     if (menuBtn) menuBtn.addEventListener('click', () => aside.classList.toggle('open'));
