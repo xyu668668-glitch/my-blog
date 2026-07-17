@@ -1,892 +1,306 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — 思考与记录</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #0c0e14;
-      --card: #13161f;
-      --card-hover: #1a1e2c;
-      --text: #e8eaf0;
-      --text-muted: #6b7280;
-      --accent: #4fc3f7;
-      --accent-dim: rgba(79,195,247,0.12);
-      --border: rgba(255,255,255,0.08);
-      --tag-bg: rgba(79,195,247,0.1);
-      --tag-text: #4fc3f7;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .serif { font-family: 'Noto Serif SC', Georgia, serif; }
-
-    /* ── Hero ── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 640px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&fit=crop');
-      background-size: cover;
-      background-position: center;
-      transform: scale(1.05);
-      transition: transform 8s ease-out;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(12,14,20,0.2) 0%,
-        rgba(12,14,20,0.55) 50%,
-        rgba(12,14,20,0.92) 100%
-      );
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 760px;
-      padding: 0 24px;
-      animation: heroIn 1.2s ease-out both;
-    }
-
-    @keyframes heroIn {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-    .hero-eyebrow::before, .hero-eyebrow::after {
-      content: '';
-      width: 40px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.5;
-    }
-
-    .hero h1 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(36px, 6vw, 72px);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -2px;
-      margin-bottom: 20px;
-      color: #ffffff;
-    }
-
-    .hero-desc {
-      font-size: 16px;
-      color: rgba(255,255,255,0.6);
-      max-width: 500px;
-      margin: 0 auto 40px;
-      line-height: 1.8;
-    }
-
-    /* Search bar */
-    .hero-search {
-      display: flex;
-      align-items: center;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 50px;
-      padding: 12px 20px;
-      max-width: 440px;
-      margin: 0 auto;
-      gap: 12px;
-      backdrop-filter: blur(12px);
-      transition: border-color 0.3s, background 0.3s;
-    }
-
-    .hero-search:focus-within {
-      border-color: var(--accent);
-      background: rgba(79,195,247,0.06);
-    }
-
-    .hero-search svg { color: var(--text-muted); flex-shrink: 0; }
-
-    .hero-search input {
-      flex: 1;
-      background: none;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      color: var(--text);
-    }
-
-    .hero-search input::placeholder { color: rgba(255,255,255,0.3); }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: rgba(255,255,255,0.3);
-      font-size: 10px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      animation: scrollBounce 2s ease-in-out infinite;
-    }
-
-    .hero-scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-    }
-
-    @keyframes scrollBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
-    }
-
-    /* ── Section ── */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 80px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 36px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-    }
-
-    .section-more {
-      font-size: 12px;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: gap 0.2s;
-    }
-    .section-more:hover { gap: 8px; }
-
-    /* ── Cards ── */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    }
-
-    .card:hover {
-      border-color: rgba(79,195,247,0.3);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-    }
-
-    .card-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.85);
-      transition: filter 0.3s, transform 0.5s;
-    }
-
-    .card:hover .card-img { filter: brightness(0.95); transform: scale(1.03); }
-
-    .card-img-wrap {
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card-img-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: linear-gradient(to top, var(--card), transparent);
-    }
-
-    .card-tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #fff;
-      background: rgba(79,195,247,0.8);
-      backdrop-filter: blur(8px);
-      padding: 4px 10px;
-      border-radius: 3px;
-    }
-
-    .card-body { padding: 20px 22px 24px; }
-
-    .card-date {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-      letter-spacing: 0.5px;
-    }
-
-    .card-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.45;
-      letter-spacing: -0.2px;
-      margin-bottom: 10px;
-      transition: color 0.2s;
-    }
-
-    .card:hover .card-title { color: var(--accent); }
-
-    .card-excerpt {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .tool-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .tool-link {
-      min-height: 188px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 26px;
-      background:
-        linear-gradient(135deg, rgba(79,195,247,0.12), transparent 44%),
-        var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      color: var(--text);
-      text-decoration: none;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .tool-link:hover {
-      transform: translateY(-4px);
-      border-color: rgba(79,195,247,0.35);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.34);
-    }
-
-    .tool-kicker {
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-
-    .tool-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.4px;
-      margin-bottom: 12px;
-    }
-
-    .tool-desc {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.7;
-      max-width: 520px;
-    }
-
-    .tool-action {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 24px;
-      color: var(--accent);
-      font-size: 13px;
-    }
-
-    /* ── Author strip ── */
-    .author-strip {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 40px;
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      gap: 28px;
-      align-items: center;
-      margin-bottom: 80px;
-    }
-
-    .author-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--border);
-    }
-
-    .author-info h3 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .author-info p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .author-stats {
-      display: flex;
-      gap: 32px;
-    }
-
-    .author-stat { text-align: center; }
-    .author-stat-num {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-    .author-stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 32px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-brand {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .footer-copy { font-size: 12px; color: var(--text-muted); }
-
-    /* ── Post detail ── */
-    #post-detail { display: none; }
-    #post-detail.active { display: block; }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-bottom: 48px;
-      padding-top: 60px;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: var(--accent); }
-    .back-link::before { content: '←'; }
-
-    .post-hero {
-      position: relative;
-      height: 420px;
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 48px;
-    }
-
-    .post-hero img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.6);
-    }
-
-    .post-hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(12,14,20,0.8) 0%, transparent 60%);
-      display: flex;
-      align-items: flex-end;
-      padding: 40px;
-    }
-
-    .post-hero-text { position: relative; z-index: 1; }
-
-    .post-hero .post-tag {
-      display: inline-block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #fff;
-      background: rgba(79,195,247,0.8);
-      padding: 4px 12px;
-      border-radius: 3px;
-      margin-bottom: 16px;
-    }
-
-    .post-hero h1 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(24px, 4vw, 42px);
-      font-weight: 700;
-      line-height: 1.2;
-      color: #fff;
-      letter-spacing: -0.5px;
-    }
-
-    .post-header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-    .post-header .post-tag { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--tag-text); background: var(--tag-bg); padding: 4px 12px; border-radius: 3px; margin-bottom: 16px; }
-    .post-header h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -1px; line-height: 1.2; margin-bottom: 16px; }
-    .post-header .post-meta { font-size: 13px; color: var(--text-muted); }
-
-    .post-body { font-size: 17px; line-height: 1.9; max-width: 720px; }
-    .post-body p { margin-bottom: 24px; }
-    .post-body h2 { font-family: 'Noto Serif SC', serif; font-size: 24px; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.3px; }
-    .post-body ul, .post-body ol { margin: 16px 0 24px 24px; }
-    .post-body li { margin-bottom: 8px; }
-    .post-body blockquote {
-      border-left: 2px solid var(--accent);
-      padding: 14px 24px;
-      background: var(--accent-dim);
-      margin: 32px 0;
-      border-radius: 0 4px 4px 0;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--text);
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .cards-grid { grid-template-columns: repeat(2, 1fr); }
-      .tool-grid { grid-template-columns: 1fr; }
-      .author-strip { grid-template-columns: 1fr; }
-      .author-stats { justify-content: flex-start; }
-    }
-
-    @media (max-width: 600px) {
-      .section, footer { padding-left: 20px; padding-right: 20px; }
-      .cards-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 32px; }
-      .author-strip { padding: 28px; }
-    }
-
-    [hidden] { display: none !important; }
-  </style>
-</head>
-<body>
-
-<!-- Hero -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">思考 · 记录 · 成长</div>
-    <h1 class="serif">在碎片中寻找<br>值得留下的东西</h1>
-    <p class="hero-desc">工作心得、技术探索与生活感悟。每一次落笔，都是一次认真的梳理。</p>
-    <div class="hero-search">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" placeholder="搜索文章..." />
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <div class="hero-scroll-line"></div>
-  </div>
-</div>
-
-<!-- Tools -->
-<div class="section">
-  <div class="section-head">
-    <span class="section-title serif">工具入口</span>
-    <span style="font-size:12px;color:var(--text-muted);">常用功能</span>
-  </div>
-  <div class="tool-grid">
-    <a class="tool-link" href="https://vercel-fund-wave.vercel.app/" target="_blank" rel="noopener">
-      <div>
-        <div class="tool-kicker">Fund Investment</div>
-        <div class="tool-title">基金投资信号</div>
-        <div class="tool-desc">输入基金代码，查看趋势强弱、波段位置、回撤抄底和白话建议，用来辅助判断是否建仓、定投或观察。</div>
-      </div>
-      <div class="tool-action">打开基金工具 <span>→</span></div>
-    </a>
-    <a class="tool-link" href="https://guanshanchuan-vercel.vercel.app/" target="_blank" rel="noopener">
-      <div>
-        <div class="tool-kicker">Information Capture</div>
-        <div class="tool-title">信息爬取看板</div>
-        <div class="tool-desc">进入信息采集与数据看板入口，用于查看已整理的数据页面，后续可以继续扩展爬取、汇总和分析功能。</div>
-      </div>
-      <div class="tool-action">打开信息工具 <span>→</span></div>
-    </a>
-  </div>
-</div>
-
-<!-- Cards -->
-<div class="section">
-  <div class="section-head">
-    <span class="section-title serif">近期文章</span>
-    <span style="font-size:12px;color:var(--text-muted);">共 <span id="post-count">0</span> 篇</span>
-  </div>
-  <div class="cards-grid" id="cards-grid"></div>
-</div>
-
-<!-- Author -->
-<div class="section">
-  <div class="author-strip">
-    <img class="author-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&fit=crop&crop=face&q=80" alt="avatar">
-    <div class="author-info">
-      <h3 class="serif">关于作者</h3>
-      <p>一枚喜欢折腾效率工具的普通人。工作之余喜欢写代码、做自动化，把重复的事情变得简单。这个博客用来记录所学、沉淀思考。</p>
-    </div>
-    <div class="author-stats">
-      <div class="author-stat">
-        <div class="author-stat-num" id="post-count-2">0</div>
-        <div class="author-stat-label">文章</div>
-      </div>
-      <div class="author-stat">
-        <div class="author-stat-num">重庆</div>
-        <div class="author-stat-label">所在地</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <span class="footer-brand serif">Blog.</span>
-  <span class="footer-copy">© 2026 · 用心写，每一篇</span>
-</footer>
-
-<!-- Post Detail -->
-<div id="post-detail" class="section">
-  <a href="#" class="back-link" onclick="showHome(); return false;">返回首页</a>
-  <div id="post-content"></div>
-</div>
-
-<script>
-const cardImages = [
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=600&q=80&fit=crop',
-  'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80&fit=crop',
-];
-
-const posts = [
-  {
-    id: 1,
-    title: "用 AI 工具提升行政执法法制审核效率的实践",
-    date: "2026-04-15",
-    tag: "工作",
-    excerpt: "结合法律知识库与 AI 辅助审查工具，探索法制审核工作的数字化转型路径，从重复性工作中解放出来。",
-    content: `
-      <p>行政执法法制审核是基层法制工作的核心环节，涉及大量法律条文的检索、案例的比对以及文书格式的核对。传统方式效率低、易出错，AI 工具的引入可以显著改善这一状况。</p>
-      <h2>核心痛点</h2>
-      <ul>
-        <li>法条检索依赖人工翻查，耗时长</li>
-        <li>同类案件裁量标准不一致</li>
-        <li>文书格式不规范问题反复出现</li>
-      </ul>
-      <h2>AI 辅助方案</h2>
-      <p>通过建立结构化的法律知识库，配合 AI 问答接口，可以实现：法条的快速定位、裁量基准的智能提示、文书格式的自动检查。这套方案已在实际工作中验证，效果明显。</p>
-      <blockquote>工具只是手段，核心还是人。用好 AI 工具的关键在于，知道什么时候用它，什么时候不该用它。</blockquote>
-      <h2>下一步计划</h2>
-      <p>继续完善知识库内容，积累更多典型案例，形成可直接调用的执法参考模板。</p>
-    `
-  },
-  {
-    id: 2,
-    title: "法制审核文书常见错误清单：100个案例复盘",
-    date: "2026-04-12",
-    tag: "工作",
-    excerpt: "整理近三年案卷评查中发现的典型问题，按类别归纳总结，附正确写法参考，持续更新。",
-    content: `
-      <p>法制审核是行政处罚程序中最关键的环节之一，文书质量直接关系到案件成败。我整理了最近三年案卷评查中发现的典型错误，共性问题远比想象中多。</p>
-      <h2>主体认定类错误</h2>
-      <p>当事人信息填写不全或错误是最常见的问题。身份证号缺失、统一社会信用代码填写不规范、地址不精确等问题在评查卷中反复出现。</p>
-      <blockquote>主体认定错误是硬伤，一经发现即构成程序违法，比内容错误更难补救。</blockquote>
-      <h2>证据链问题</h2>
-      <ul>
-        <li>取证时间逻辑矛盾（早于当事人陈述发生）</li>
-        <li>书证无原件或复制件未注明"与原件一致"</li>
-        <li>询问笔录缺少关键信息（无地点、无告知事项）</li>
-      </ul>
-      <h2>自由裁量适用</h2>
-      <p>罚款金额无裁量说理，或说理内容与裁量基准不对应，是另一类高频问题。行政处罚决定书必须载明裁量依据，否则在行政复议中被撤销的风险极高。</p>
-    `
-  },
-  {
-    id: 3,
-    title: "Markdown 写作：为什么我彻底放弃了 Word",
-    date: "2026-04-10",
-    tag: "效率",
-    excerpt: "从 Word 的崩溃与格式灾难，到 Markdown 的简洁与安心。这是一次写作工具的认知升级。",
-    content: `
-      <p>Word 是我用了十几年的写作工具，直到我开始频繁遇到这些问题：格式错乱、文件损坏、多设备同步困难、协作冲突。</p>
-      <h2>Word 的三个噩梦</h2>
-      <p>第一个噩梦是版本管理。每次改动都要另存文件，docx-v1、v2、v3、v4……最后自己都分不清哪个是最终版。第二个噩梦是格式刷。一篇文章调好格式，换到另一台电脑打开，字体全变了。第三个噩梦是协作。多人同时编辑一个文档，合并时灾难现场。</p>
-      <blockquote>Word 解决的是排版问题，而不是写作本身。当写作和排版绑定在一起，两者都会变得脆弱。</blockquote>
-      <h2>Markdown 带来的改变</h2>
-      <p>切换到 Markdown 后，写作回归本质：内容。格式变成简单的标记符号，<code>#</code> 是标题，<code>**</code> 是加粗，<code>-</code> 是列表。文件就是一个纯文本，走到哪都能打开，永远不会损坏。</p>
-      <h2>现在的写作流</h2>
-      <p>Typora 写 Markdown → 导出 PDF 或 DOCX → 自动同步到 iCloud。这个流程我跑了两年，再没遇到过格式问题。</p>
-    `
-  },
-  {
-    id: 4,
-    title: "从零搭建个人投资追踪系统：工具选型与实践",
-    date: "2026-04-08",
-    tag: "投资",
-    excerpt: "用 Python + Web 工具搭建个人投资组合追踪系统，自动化获取行情数据，告别手动记录。",
-    content: `
-      <p>投资是一件需要长期坚持的事，而数据的记录和追踪往往是最费时间的环节。我花了几天时间，用 AI 辅助搭建了一套自动化投资追踪系统，现在每天只需要打开网页就能看到所有持仓情况。</p>
-      <h2>工具选型</h2>
-      <p>核心数据源选择了 AkShare 和东方财富 API，行情数据免费且覆盖全面。前端用简单的 HTML + Chart.js 展示图表，后端用 Python 脚本定时更新数据。</p>
-      <h2>核心功能</h2>
-      <ul>
-        <li>持仓收益实时计算</li>
-        <li>250日均线偏离度可视化</li>
-        <li>RSI 超买超卖提示</li>
-        <li>每日红绿灯评分卡</li>
-      </ul>
-      <blockquote>投资系统是为自己服务的，不需要追求花哨，核心数据清晰直观就够了。</blockquote>
-      <h2>踩过的坑</h2>
-      <p>前复权数据计算均线时要格外注意，否则历史数据会失真。另外 API 有频率限制，定时任务间隔不要太短。</p>
-    `
-  },
-  {
-    id: 5,
-    title: "重庆的秋天：一条被忽略的 Citywalk 路线",
-    date: "2026-04-05",
-    tag: "生活",
-    excerpt: "从鹅岭公园到李子坝，穿过老社区和防空洞隧道，用半天时间重新认识这座山城的秋天。",
-    content: `
-      <p>在重庆住了这么多年，我第一次认真走了一遍鹅岭到李子坝这条线。9公里的路，穿过老社区、防空洞、废弃铁路，城市的褶皱里藏着太多没注意过的细节。</p>
-      <h2>起点：鹅岭公园</h2>
-      <p>早上六点半的鹅岭，空气里带着潮湿的树叶味道。公园里全是晨练的老人，打太极的、抖空竹的、写水字的。我穿过他们，沿着步道往南走，很快就离开了主路。</p>
-      <h2>防空洞</h2>
-      <p>这段路有意思的地方在于，你会不断和防空洞相遇。它们被改造成了火锅馆、麻将馆、小酒馆。走在里面，凉飕飕的，能闻到隔壁飘来的牛油火锅香味。</p>
-      <blockquote>一座城市的深度，往往藏在它不愿拆掉的老建筑里。</blockquote>
-      <h2>李子坝</h2>
-      <p>到了李子坝观景台已经快中午了，人很多。但我从侧面小路绕到江边，那里几乎没人，坐在石头上发了会儿呆，看着轻轨从头顶的楼里钻出来，又钻进去。</p>
-    `
-  },
-  {
-    id: 6,
-    title: "Mac mini + 极空间 NAS：我的个人数字中枢",
-    date: "2026-03-28",
-    tag: "效率",
-    excerpt: "Mac mini M4 作为主力工作机，极空间 NAS 负责存储与媒体管理，这套组合用了半年，聊聊真实感受。",
-    content: `
-      <p>去年入手了 Mac mini M4，配合极空间 NAS Z4，用了大半年，组合超出预期，记录一下真实使用感受。</p>
-      <h2>为什么选 Mac mini</h2>
-      <p>M4 芯片性能强，功耗低，Mac mini 体积小不占地方，性价比在 Mac 产品线里最高。8G 内存日常办公够用，有条件建议上 16G。</p>
-      <h2>极空间 NAS 的价值</h2>
-      <p>Radarr/Sonarr 自动追剧追电影，Jellyfin 做媒体中心，Jellyseerr 做请求管理。这套自动化媒体库体验比任何流媒体都爽。</p>
-      <h2>数据备份策略</h2>
-      <p>重要文件用 Mac 自带 Time Machine 备份到 NAS，另外用 rclone 定期同步到阿里云 OSS，冷备一份。重要工作文件三重保护。</p>
-      <blockquote>NAS 是那个"买了之后才发现早就需要"的东西。</blockquote>
-    `
-  },
-  {
-    id: 7,
-    title: "定投指数基金两年：我在熊市里学到的五件事",
-    date: "2026-03-22",
-    tag: "投资",
-    excerpt: "2024年初开始定投，中间经历了大幅下跌，也经历了回血。这段经历比任何理财书都更直接地教会我投资是什么。",
-    content: `
-      <p>2024年1月，我开始正式定投三只指数基金：红利低波50、纳指100、标普500。每周固定金额，雷打不动，到现在已经坚持了两年。</p>
-      <h2>第一件事：熊市是最好的课堂</h2>
-      <p>2024年的大部分时间，A股都在震荡下行。账户持续亏损时，心里确实不好受。但回过头看，那段时间积累的份额数量，是后面回血的基础。没有熊市播种，就没有牛市收获。</p>
-      <blockquote>定投的核心逻辑很简单：跌的时候买更多份额，涨的时候享受复利。难的是坚持做到。</blockquote>
-      <h2>第二件事：不要每天看账户</h2>
-      <p>盯盘是散户最大的敌人。看了就容易动，动了一般就后悔。我现在固定每周日晚上看一眼，算一下偏离度和RSI，然后该干嘛干嘛。</p>
-      <h2>第三件事：MA250 是最好的朋友</h2>
-      <p>用均线来判断周期位置，比任何宏观预测都简单。大盘在 MA250 以下，慢慢买；在 MA250 以上，减少定投或者停止。纪律比判断重要。</p>
-    `
-  },
-  {
-    id: 8,
-    title: "博客上线全流程：零基础也能做网站",
-    date: "2026-03-20",
-    tag: "技术",
-    excerpt: "注册 GitHub、安装 GitHub Desktop、推到远程仓库、Vercel 部署上线——完整流程记录，从零到上线只需要半天。",
-    content: `
-      <p>很多人觉得做网站是技术活，其实现在有了 AI 辅助，最难的那部分已经有人帮你做了。这篇文章记录了我从零开始建博客的完整流程。</p>
-      <h2>需要准备的东西</h2>
-      <ul>
-        <li>一个 GitHub 账号（免费）</li>
-        <li>GitHub Desktop（免费，图形界面）</li>
-        <li>一个 Vercel 账号（免费）</li>
-        <li>一个域名（可选，约50元/年）</li>
-      </ul>
-      <h2>核心步骤</h2>
-      <p>第一步用 AI 生成网站代码，第二步用 GitHub Desktop 推送到仓库，第三步 Vercel 读取 GitHub 仓库自动构建部署。全程不需要写代码，不需要敲命令行。</p>
-      <blockquote>不要等准备好了再开始，先跑通最小闭环，再迭代优化。</blockquote>
-      <h2>总费用</h2>
-      <p>如果用 Vercel 免费额度托管，网站本身不花钱。只需要一个域名（可选），50元/年。如果用腾讯云香港服务器，月均30元左右。</p>
-    `
-  },
-  {
-    id: 9,
-    title: "读书笔记：《卡片笔记写作法》",
-    date: "2026-03-15",
-    tag: "读书",
-    excerpt: "卢曼用卡片盒写了70本书，方法却出奇简单。笔记不是记录，而是思考的工具。",
-    content: `
-      <p>尼克拉斯·卢曼是德国社会学家，他一生写了70本书和400多篇论文，产量惊人。他的秘密是一个装满卡片的盒子——不是文件夹，是一个笔记系统。</p>
-      <h2>核心思想</h2>
-      <p>传统的笔记系统是按主题分类：读书笔记放这里，工作笔记放那里。卢曼的方法不一样：所有笔记都放在一个盒子里，用编号和引用来建立联系。一张卡片引用另一张，卡片之间形成网络，知识自己生长。</p>
-      <blockquote>写作不是把脑子里的东西倒出来，而是通过写作来思考。卡片盒是思考的外骨骼。</blockquote>
-      <h2>实操方法</h2>
-      <p>卢曼笔记法有三个核心动作：<strong>闪念笔记</strong>（随手记下的想法，不加判断）、<strong>文献笔记</strong>（读完书后，用自己的话缩写，附上来源）、<strong>永久笔记</strong>（将闪念和文献整合，形成独立的思考片段，放入卡片盒）。</p>
-      <h2>我的实践</h2>
-      <p>我用 Obsidian 搭了这套系统。目前卡片盒里有200多条笔记，明显感觉到写文章比以前容易了——不是因为我变聪明了，是因为素材一直在积累。</p>
-    `
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ianning · 个人工具索引</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&family=Source+Serif+4:wght@600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: { extend: {
+      colors: {
+        "on-primary-fixed": "#041a3f", "inverse-primary": "#b4c6f4", "tertiary": "#0f0800",
+        "tertiary-container": "#2d1e00", "on-surface": "#191c1e", "tertiary-fixed-dim": "#e9c176",
+        "on-primary-fixed-variant": "#34466d", "on-error": "#ffffff", "outline": "#75777f",
+        "on-surface-variant": "#44464e", "tertiary-fixed": "#ffdea5", "secondary-fixed-dim": "#bdc7dc",
+        "inverse-on-surface": "#eff1f3", "surface": "#f7f9fb", "surface-dim": "#d8dadc",
+        "on-secondary-fixed-variant": "#3d4759", "on-secondary": "#ffffff", "surface-container": "#eceef0",
+        "on-primary-container": "#7687b2", "on-tertiary-fixed": "#261900", "secondary-fixed": "#d9e3f9",
+        "on-secondary-fixed": "#121c2c", "on-background": "#191c1e", "primary-fixed-dim": "#b4c6f4",
+        "error-container": "#ffdad6", "surface-variant": "#e0e3e5", "primary-container": "#0a1f44",
+        "surface-container-low": "#f2f4f6", "surface-container-highest": "#e0e3e5",
+        "surface-container-lowest": "#ffffff", "surface-tint": "#4c5e86", "on-primary": "#ffffff",
+        "primary": "#00081e", "on-tertiary-fixed-variant": "#5d4201", "on-error-container": "#93000a",
+        "primary-fixed": "#d9e2ff", "error": "#ba1a1a", "outline-variant": "#c5c6cf",
+        "on-tertiary-container": "#a5833f", "background": "#f7f9fb", "on-tertiary": "#ffffff",
+        "surface-container-high": "#e6e8ea", "on-secondary-container": "#596376",
+        "secondary-container": "#d6e0f6", "secondary": "#555f71", "surface-bright": "#f7f9fb",
+        "inverse-surface": "#2d3133"
+      },
+      borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+      spacing: { "section-gap": "48px", "card-padding": "24px", "gutter": "24px", "unit": "4px", "container-padding": "32px" },
+      fontFamily: {
+        "headline-md": ["\"Source Serif 4\""], "display-lg-mobile": ["\"Source Serif 4\""],
+        "title-sm": ["Hanken Grotesk"], "label-caps": ["Hanken Grotesk"], "body-md": ["Hanken Grotesk"],
+        "data-mono": ["JetBrains Mono"], "display-lg": ["\"Source Serif 4\""]
+      },
+      fontSize: {
+        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+        "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "title-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "data-mono": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+      }
+    } }
   }
-];
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  body { background-color: #f7f9fb; font-family: 'Hanken Grotesk', sans-serif; }
+  .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  .fade-up { opacity: 0; transform: translateY(10px); }
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 2px; }
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 96px; }
+  @media (max-width: 1024px) {
+    aside.sidenav { transform: translateX(-100%); transition: transform .3s ease; }
+    aside.sidenav.open { transform: translateX(0); }
+    header.topbar, main.canvas { padding-left: 0 !important; }
+  }
+</style>
+</head>
+<body class="text-on-background">
 
-const postHeroImages = [
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1200&q=85&fit=crop',
-  'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=85&fit=crop',
-];
-
-function renderCards() {
-  const grid = document.getElementById('cards-grid');
-  document.getElementById('post-count').textContent = posts.length;
-  document.getElementById('post-count-2').textContent = posts.length;
-  grid.innerHTML = posts.map((p, i) => `
-    <div class="card" onclick="showPost(${p.id})">
-      <div class="card-img-wrap">
-        <img class="card-img" src="${cardImages[i % cardImages.length]}" alt="${p.title}" loading="lazy">
-        <div class="card-img-overlay"></div>
-        <span class="card-tag">${p.tag}</span>
-      </div>
-      <div class="card-body">
-        <div class="card-date">${p.date}</div>
-        <div class="card-title serif">${p.title}</div>
-        <div class="card-excerpt">${p.excerpt}</div>
+<!-- SideNavBar -->
+<aside class="sidenav fixed left-0 top-0 h-screen w-[280px] bg-primary flex flex-col overflow-y-auto border-r border-outline-variant z-50">
+  <div class="px-6 py-8">
+    <h1 class="text-headline-md font-headline-md text-primary-fixed tracking-tight">Ianning</h1>
+    <p class="text-label-caps font-label-caps text-on-primary-fixed-variant mt-1">Personal Portfolio</p>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="flex items-center gap-x-4 px-6 py-4 text-on-primary-fixed border-l-4 border-tertiary-fixed bg-on-primary-fixed-variant/10 transition-all font-label-caps text-label-caps" href="#profile">
+      <span class="material-symbols-outlined">person</span> 个人介绍
+    </a>
+    <a class="flex items-center gap-x-4 px-6 py-4 text-on-primary-fixed-variant hover:text-on-primary-fixed hover:bg-on-primary-fixed-variant/5 transition-colors font-label-caps text-label-caps border-l-4 border-transparent" href="#tools">
+      <span class="material-symbols-outlined">grid_view</span> 工具展示
+    </a>
+  </nav>
+  <div class="p-6 mt-auto">
+    <a href="#tools" class="block w-full text-center py-3 px-4 bg-primary-fixed text-primary font-title-sm text-title-sm rounded-lg hover:opacity-90 transition-opacity">进入工具集</a>
+    <div class="mt-8 flex items-center gap-3">
+      <img class="w-10 h-10 rounded-full object-cover border border-on-primary-fixed-variant/40" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=160&h=160&fit=crop&crop=faces&q=80" alt="Ianning"/>
+      <div>
+        <p class="text-label-caps font-label-caps text-on-primary-fixed">Ianning</p>
+        <p class="text-[10px] text-on-primary-fixed-variant opacity-70">重庆 · Data / Law / Investment</p>
       </div>
     </div>
-  `).join('');
-}
+  </div>
+</aside>
 
-function showHome() {
-  document.querySelector('.hero').style.display = '';
-  document.getElementById('post-detail').style.display = 'none';
-  document.getElementById('post-detail').classList.remove('active');
-  document.querySelectorAll('.section').forEach(s => s.style.display = '');
-  document.querySelector('footer').style.display = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+<!-- TopAppBar -->
+<header class="topbar fixed top-0 left-0 right-0 h-16 flex justify-between items-center pl-[280px] px-gutter bg-surface border-b border-surface-variant z-40">
+  <div class="flex items-center gap-3">
+    <button id="menuBtn" class="material-symbols-outlined lg:hidden text-on-surface-variant" aria-label="menu">menu</button>
+    <nav class="flex items-center gap-2 text-label-caps font-label-caps text-on-surface-variant">
+      <span>Portfolio</span>
+      <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+      <span class="text-primary font-bold">个人首页</span>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4 pr-1">
+    <a href="mailto:xyu668668@gmail.com" class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" title="Email">mail</a>
+    <a href="https://github.com/xyu668668-glitch" target="_blank" rel="noopener" class="text-on-surface-variant hover:text-primary transition-colors flex items-center" title="GitHub">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.9 18.3 5.2 18.3 5.2c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+    </a>
+  </div>
+</header>
 
-function showPost(id) {
-  const idx = posts.findIndex(p => p.id === id);
-  const post = posts[idx];
-  if (!post) return;
-  document.getElementById('post-content').innerHTML = `
-    <div class="post-hero">
-      <img src="${postHeroImages[idx % postHeroImages.length]}" alt="${post.title}">
-      <div class="post-hero-overlay">
-        <div class="post-hero-text">
-          <div class="post-tag">${post.tag}</div>
-          <h1 class="serif">${post.title}</h1>
+<!-- Main Content Canvas -->
+<main class="canvas pl-[280px] pt-16 min-h-screen">
+  <div class="max-w-[1440px] mx-auto p-container-padding">
+
+    <!-- Page Header -->
+    <div class="mb-10 flex flex-col md:flex-row md:justify-between md:items-end gap-6">
+      <div>
+        <div class="text-label-caps font-label-caps text-on-tertiary-container mb-3">AI · DATA · LAW · INVESTMENT</div>
+        <h2 class="text-display-lg font-display-lg text-primary">Ianning</h2>
+        <p class="text-body-md font-body-md text-on-surface-variant mt-3 max-w-2xl">
+          关注 AI、数据、法制审核与投资研究。这个页面收纳我持续打磨的个人工具，把复杂问题整理成更清楚、可复用的工作流。
+        </p>
+      </div>
+      <div class="flex gap-3 shrink-0">
+        <a href="mailto:xyu668668@gmail.com" class="flex items-center gap-2 px-6 py-3 border border-primary text-primary font-label-caps text-label-caps rounded hover:bg-primary-fixed transition-colors">
+          <span class="material-symbols-outlined text-[18px]">mail</span> 联系我
+        </a>
+        <a href="#tools" class="flex items-center gap-2 px-6 py-3 bg-primary text-on-primary font-label-caps text-label-caps rounded hover:opacity-90 transition-opacity shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">grid_view</span> 工具集
+        </a>
+      </div>
+    </div>
+
+    <!-- Section: Profile -->
+    <section id="profile" class="mb-section-gap">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Profile</span>
+        <span class="h-px flex-1 bg-outline-variant"></span>
+        <span class="text-label-caps font-label-caps text-on-surface-variant">个人介绍</span>
+      </div>
+      <div class="bento-grid">
+        <!-- Portrait -->
+        <div class="col-span-12 lg:col-span-4 bg-surface-container-lowest border border-outline-variant p-card-padding fade-up">
+          <div class="aspect-[4/5] overflow-hidden bg-surface-container">
+            <img class="w-full h-full object-cover" style="filter:grayscale(1) contrast(1.03)" src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=900&q=84&fit=crop&crop=faces" alt="Ianning"/>
+          </div>
+          <div class="mt-5 flex items-center justify-between">
+            <div>
+              <p class="text-title-sm font-title-sm text-primary">Ianning</p>
+              <p class="text-label-caps font-label-caps text-on-surface-variant mt-1">重庆 · Chongqing</p>
+            </div>
+            <span class="text-[10px] font-label-caps text-on-tertiary-container bg-tertiary-fixed px-2 py-0.5 rounded">持续打磨</span>
+          </div>
+        </div>
+        <!-- Bio + facts -->
+        <div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col fade-up">
+          <h3 class="text-headline-md font-headline-md text-primary">Less interface, more workflow.</h3>
+          <p class="text-body-md font-body-md text-on-surface-variant mt-4 leading-relaxed">
+            我不是科班出身的工程师，只是一个喜欢把日常里的复杂问题拆开、再用工具重新组织起来的人。围绕 AI、数据、法制审核与长期主义投资，我持续搭建一些小而实用的个人工具——它们不追求花哨的界面，而是尽量把“判断之前需要看清的信息”整理清楚，形成可以反复复用的工作流。
+          </p>
+          <p class="text-body-md font-body-md text-on-surface-variant mt-4 leading-relaxed">
+            比起“做完一次”，我更在意“能不能长期沉淀”。这也是这个页面存在的意义：把散落的工具收成一个索引，慢慢生长。
+          </p>
+          <div class="mt-auto pt-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 border-t border-surface-variant mt-8">
+            <div>
+              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">关注领域</p>
+              <p class="text-body-md font-body-md text-primary mt-1">AI · 数据</p>
+            </div>
+            <div>
+              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">研究方向</p>
+              <p class="text-body-md font-body-md text-primary mt-1">法制审核 · 投资</p>
+            </div>
+            <div>
+              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">所在地</p>
+              <p class="text-body-md font-body-md text-primary mt-1">重庆</p>
+            </div>
+            <div>
+              <p class="text-label-caps font-label-caps text-on-surface-variant uppercase">定位</p>
+              <p class="text-body-md font-body-md text-primary mt-1">个人工具索引</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="post-header">
-      <div class="post-tag">${post.tag}</div>
-      <h1 class="serif">${post.title}</h1>
-      <div class="post-meta">${post.date}</div>
-    </div>
-    <div class="post-body">${post.content}</div>
-  `;
-  document.querySelector('.hero').style.display = 'none';
-  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-  document.querySelector('footer').style.display = 'none';
-  document.getElementById('post-detail').style.display = '';
-  document.getElementById('post-detail').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    </section>
 
-renderCards();
+    <!-- Section: Tools -->
+    <section id="tools" class="mb-section-gap">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Tools</span>
+        <span class="h-px flex-1 bg-outline-variant"></span>
+        <span class="text-label-caps font-label-caps text-on-surface-variant">工具展示 · 04</span>
+      </div>
+      <div class="bento-grid">
+
+        <!-- Tool 01: Trend -->
+        <a href="https://vercel-fund-wave.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+          <div class="flex justify-between items-start mb-5">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">trending_up</span>
+              <div>
+                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 01</p>
+                <h3 class="text-title-sm font-title-sm text-primary">趋势分析</h3>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+          </div>
+          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金代码，查看趋势强弱、波段位置、回撤和白话建议。它不替代判断，而是把判断前的信息整理清楚。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">基金投资 / 数据信号</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">趋势、回撤、波段、历史统计</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用，持续迭代</span></div>
+          </div>
+        </a>
+
+        <!-- Tool 02: Drawdown -->
+        <a href="https://drawdown-tool.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+          <div class="flex justify-between items-start mb-5">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">show_chart</span>
+              <div>
+                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 02</p>
+                <h3 class="text-title-sm font-title-sm text-primary">组合回撤</h3>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+          </div>
+          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金或 ETF 代码和目标仓位，回测组合资金曲线、最大回撤、定投和再平衡效果，用来观察组合风险。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">组合回测 / 回撤分析</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">累计净值、定投、再平衡、基准对比</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          </div>
+        </a>
+
+        <!-- Tool 03: Grid -->
+        <a href="https://grid-strategy-lab.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+          <div class="flex justify-between items-start mb-5">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">grid_on</span>
+              <div>
+                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 03</p>
+                <h3 class="text-title-sm font-title-sm text-primary">网格策略</h3>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+          </div>
+          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">输入基金、ETF 或指数代码，自动测算 5 套价格触发规则和 5 套资金方案，比较收益、回撤、仓位和历史滚动胜率。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">网格策略 / 资金方案回测</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">触发规则、资金计划、滚动概率、满仓对比</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          </div>
+        </a>
+
+        <!-- Tool 04: Scanner -->
+        <a href="https://fund-signal-scanner.vercel.app/" target="_blank" rel="noopener" class="group col-span-12 lg:col-span-6 bg-surface-container-lowest border border-outline-variant p-card-padding flex flex-col hover:border-primary hover:shadow-lg transition-all fade-up">
+          <div class="flex justify-between items-start mb-5">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary bg-primary-fixed w-11 h-11 flex items-center justify-center rounded-lg">radar</span>
+              <div>
+                <p class="text-label-caps font-label-caps text-on-tertiary-container">TOOL 04</p>
+                <h3 class="text-title-sm font-title-sm text-primary">信号扫描</h3>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all">arrow_outward</span>
+          </div>
+          <p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">批量扫描基金净值位置、趋势强弱、回撤修复和历史相似胜率，把今日基金板块、波段信号和风险名单整理成观察清单。</p>
+          <div class="mt-auto pt-6 space-y-2 text-[13px] font-body-md border-t border-surface-variant mt-6">
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">类型</span><span class="text-primary">基金扫描 / 机会观察</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">方法</span><span class="text-primary">低位高位、趋势强弱、回撤修复、历史胜率</span></div>
+            <div class="flex gap-3"><span class="text-on-surface-variant w-10 shrink-0">状态</span><span class="text-primary flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>线上可用</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-outline-variant pt-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+      <div>
+        <p class="text-title-sm font-title-sm text-primary">Ianning · Tools Portfolio Index</p>
+        <p class="text-label-caps font-label-caps text-on-surface-variant mt-1">Less interface, more workflow.</p>
+      </div>
+      <p class="text-label-caps font-label-caps text-on-surface-variant">© 2026 · 重庆 · Data / Law / Investment</p>
+    </footer>
+
+  </div>
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.fade-up');
+    items.forEach((el, i) => {
+      el.style.transition = `all .45s ease-out ${i * 0.06}s`;
+      requestAnimationFrame(() => { setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 60); });
+    });
+    const menuBtn = document.getElementById('menuBtn');
+    const aside = document.querySelector('aside.sidenav');
+    if (menuBtn) menuBtn.addEventListener('click', () => aside.classList.toggle('open'));
+    document.querySelectorAll('aside.sidenav a[href^="#"]').forEach(a =>
+      a.addEventListener('click', () => aside.classList.remove('open')));
+  });
 </script>
-
-</body>
-</html>
+</body></html>
